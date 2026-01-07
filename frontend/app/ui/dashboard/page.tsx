@@ -5,7 +5,7 @@ import { fetchRevenue, fetchLatestInvoices, fetchCardData, } from '@/app/lib/dat
 import SideNav from './sidenav';
 
 export default async function Page() {
-    const revenue = await fetchRevenue();
+    const revenue = await fetchRevenue() || [];
     const latestInvoices = await fetchLatestInvoices();
     const { totalPaidInvoices, totalPendingInvoices, numberOfInvoices, numberOfCustomers } = await fetchCardData();
 
