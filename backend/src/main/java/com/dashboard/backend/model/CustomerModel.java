@@ -1,4 +1,5 @@
 package com.dashboard.backend.model;
 
-public class UserModel {
+public class CustomerModel {
+
 }
