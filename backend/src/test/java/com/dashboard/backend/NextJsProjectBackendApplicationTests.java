@@ -1,4 +1,4 @@
-package com.dashboard.next_js_project_backend;
+package com.dashboard.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
