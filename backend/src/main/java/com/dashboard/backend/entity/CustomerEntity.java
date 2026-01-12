@@ -5,13 +5,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "customers")
 public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -44,7 +46,7 @@ public class CustomerEntity {
     public void setImage_url(String image_url){
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 }

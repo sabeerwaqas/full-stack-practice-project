@@ -3,8 +3,10 @@ package com.dashboard.backend.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.UUID;
+
 public class CustomerDTO {
-    public Long id;
+    public UUID id;
 
     @NotBlank
     public String name;
