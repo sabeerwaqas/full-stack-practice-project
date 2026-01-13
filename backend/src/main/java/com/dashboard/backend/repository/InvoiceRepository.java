@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Long> {
-    <T> ScopedValue<T> findById(UUID id);
+public interface InvoiceRepository extends JpaRepository<InvoiceEntity, UUID> {
 }
