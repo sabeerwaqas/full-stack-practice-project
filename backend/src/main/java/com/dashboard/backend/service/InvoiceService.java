@@ -29,4 +29,18 @@ public class InvoiceService {
                 .stream().map(InvoiceMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public InvoiceDTO updateInvoice(InvoiceDTO dto) {
+
+        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.id)
+                .orElseThrow(() -> new RuntimeException("Invoice not found"));
+        entity.setAmount(dto.amount);
+        entity.setStatus(dto.status);
+        entity.setDate(dto.date);
+        entity.setCustomerId(dto.customerId);
+        InvoiceEntity updated = repository.save(entity);
+        return InvoiceMapper.toDTO(updated);
+    }
+
+
 }

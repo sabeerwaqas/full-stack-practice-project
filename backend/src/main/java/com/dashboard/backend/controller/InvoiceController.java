@@ -27,4 +27,9 @@ public class InvoiceController {
         return service.getInvoices();
     }
 
+    @PutMapping
+    public InvoiceDTO updateEntity(@Valid @RequestBody InvoiceDTO dto){
+        return service.updateInvoice(dto);
+    }
+
 }

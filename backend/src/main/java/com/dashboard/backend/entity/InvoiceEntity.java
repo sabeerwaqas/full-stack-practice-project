@@ -1,9 +1,7 @@
 package com.dashboard.backend.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,7 +10,7 @@ import java.util.UUID;
 public class InvoiceEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @Column(nullable = false, unique = true)
