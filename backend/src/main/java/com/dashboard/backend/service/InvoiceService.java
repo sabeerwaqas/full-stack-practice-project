@@ -32,7 +32,7 @@ public class InvoiceService {
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {
 
-        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.id)
+        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.customerId)
                 .orElseThrow(() -> new RuntimeException("Invoice not found"));
         entity.setAmount(dto.amount);
         entity.setStatus(dto.status);

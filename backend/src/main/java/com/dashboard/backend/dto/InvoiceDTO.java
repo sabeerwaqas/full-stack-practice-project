@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.UUID;
 
 public class InvoiceDTO {
-    public UUID id;
     public UUID customerId;
 
     public Integer amount;

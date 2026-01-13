@@ -10,9 +10,6 @@ import java.util.UUID;
 public class InvoiceEntity {
 
     @Id
-    @Column(columnDefinition = "uuid")
-    private UUID id;
-
     @Column(nullable = false, unique = true)
     private UUID customerId;
 
@@ -24,10 +21,6 @@ public class InvoiceEntity {
 
     @Column(nullable = false)
     private Date date;
-
-    public UUID getId(){
-        return this.id;
-    }
 
     public UUID getCustomerId(){
         return this.customerId;
@@ -43,10 +36,6 @@ public class InvoiceEntity {
 
     public Date getDate(){
         return this.date;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public void setCustomerId(UUID customerId) {
