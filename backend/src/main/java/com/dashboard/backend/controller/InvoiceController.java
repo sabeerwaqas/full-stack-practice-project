@@ -1,5 +1,6 @@
 package com.dashboard.backend.controller;
 
+import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
 import com.dashboard.backend.service.CustomerService;
 import com.dashboard.backend.service.InvoiceService;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/invoice")
+@RequestMapping("/api/invoice")
 public class InvoiceController {
     private final InvoiceService service;
 
@@ -25,6 +26,11 @@ public class InvoiceController {
     @GetMapping
     public List<InvoiceDTO> getInvoice(){
         return service.getInvoices();
+    }
+
+    @GetMapping("/count")
+    public InvoiceCountDTO getTotalInvoices(){
+        return service.getInvoicesCount();
     }
 
     @PutMapping

@@ -1,5 +1,6 @@
 package com.dashboard.backend.service;
 
+import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
 import com.dashboard.backend.entity.InvoiceEntity;
 import com.dashboard.backend.mapper.InvoiceMapper;
@@ -28,6 +29,10 @@ public class InvoiceService {
         return repository.findAll()
                 .stream().map(InvoiceMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public InvoiceCountDTO getInvoicesCount() {
+        return new InvoiceCountDTO(repository.count());
     }
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {

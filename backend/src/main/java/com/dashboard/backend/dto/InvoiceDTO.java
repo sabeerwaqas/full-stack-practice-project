@@ -14,4 +14,6 @@ public class InvoiceDTO {
     public String status;
 
     public Date date;
+
 }
+
