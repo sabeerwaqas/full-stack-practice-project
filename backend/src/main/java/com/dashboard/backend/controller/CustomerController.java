@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     private final CustomerService service;
@@ -17,12 +17,12 @@ public class CustomerController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public CustomerDTO addCustomer(@Valid @RequestBody CustomerDTO dto) {
         return service.addCustomer(dto);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<CustomerDTO> getAllCustomers() {
         return service.getAllCustomers();
     }
