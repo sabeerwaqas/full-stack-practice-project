@@ -16,5 +16,12 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, UUID> {
         WHERE i.status = 'pending'
     """)
     long sumPendingAmount();
+
+    @Query("""
+        SELECT COALESCE(SUM(i.amount), 0)
+        FROM InvoiceEntity i
+        WHERE i.status = 'paid'
+    """)
+    long sumPaidAmount();
 }
 
