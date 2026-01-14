@@ -2,6 +2,7 @@ package com.dashboard.backend.controller;
 
 import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
+import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.service.CustomerService;
 import com.dashboard.backend.service.InvoiceService;
 import jakarta.validation.Valid;
@@ -31,6 +32,11 @@ public class InvoiceController {
     @GetMapping("/count")
     public InvoiceCountDTO getTotalInvoices(){
         return service.getInvoicesCount();
+    }
+
+    @GetMapping("/pending-amount")
+    public PendingAmountDTO getPendingAmount(){
+        return service.getPendingAmount();
     }
 
     @PutMapping

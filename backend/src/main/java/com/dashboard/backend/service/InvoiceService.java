@@ -2,6 +2,7 @@ package com.dashboard.backend.service;
 
 import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
+import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.entity.InvoiceEntity;
 import com.dashboard.backend.mapper.InvoiceMapper;
 import com.dashboard.backend.repository.InvoiceRepository;
@@ -34,6 +35,12 @@ public class InvoiceService {
     public InvoiceCountDTO getInvoicesCount() {
         return new InvoiceCountDTO(repository.count());
     }
+
+    public PendingAmountDTO getPendingAmount() {
+        long pendingAmount = repository.sumPendingAmount();
+        return new PendingAmountDTO(pendingAmount);
+    }
+
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {
 
