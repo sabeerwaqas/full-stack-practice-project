@@ -1,5 +1,6 @@
 package com.dashboard.backend.service;
 
+import com.dashboard.backend.dto.CustomerCountDTO;
 import com.dashboard.backend.dto.CustomerDTO;
 import com.dashboard.backend.entity.CustomerEntity;
 import com.dashboard.backend.mapper.CustomerMapper;
@@ -22,6 +23,10 @@ public class CustomerService {
         CustomerEntity entity = CustomerMapper.toEntity(dto);
         CustomerEntity saved = repository.save(entity);
         return CustomerMapper.toDTO(saved);
+    }
+
+    public CustomerCountDTO getCustomersCount(){
+        return new CustomerCountDTO(repository.count());
     }
 
     public List<CustomerDTO> getAllCustomers() {

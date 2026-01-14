@@ -1,5 +1,6 @@
 package com.dashboard.backend.controller;
 
+import com.dashboard.backend.dto.CustomerCountDTO;
 import com.dashboard.backend.dto.CustomerDTO;
 import com.dashboard.backend.service.CustomerService;
 import jakarta.validation.Valid;
@@ -25,5 +26,10 @@ public class CustomerController {
     @GetMapping("/all")
     public List<CustomerDTO> getAllCustomers() {
         return service.getAllCustomers();
+    }
+
+    @GetMapping("/count")
+    public CustomerCountDTO getCustomersCount(){
+        return service.getCustomersCount();
     }
 }
