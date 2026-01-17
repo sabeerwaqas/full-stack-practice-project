@@ -12,6 +12,9 @@ public class InvoiceEntity {
 
     @Id
     @Column(nullable = false, unique = true)
+    private UUID invoiceId;
+
+    @Column(nullable = false, unique = true)
     private UUID customerId;
 
     @Column(nullable = false)
@@ -37,6 +40,10 @@ public class InvoiceEntity {
 
     public Date getDate(){
         return this.date;
+    }
+
+    public UUID getInvoiceId(){
+        return this.invoiceId;
     }
 
     public void setCustomerId(UUID customerId) {

@@ -7,9 +7,11 @@ import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.service.CustomerService;
 import com.dashboard.backend.service.InvoiceService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/invoice")
@@ -49,5 +51,12 @@ public class InvoiceController {
     public InvoiceDTO updateEntity(@Valid @RequestBody InvoiceDTO dto){
         return service.updateInvoice(dto);
     }
+
+    @DeleteMapping("/{invoiceId}")
+    public void deleteInvoice(@PathVariable UUID invoiceId) {
+        service.deleteInvoice(invoiceId);
+    }
+
+
 
 }

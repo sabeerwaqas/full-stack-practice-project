@@ -7,9 +7,13 @@ import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.entity.InvoiceEntity;
 import com.dashboard.backend.mapper.InvoiceMapper;
 import com.dashboard.backend.repository.InvoiceRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +62,14 @@ public class InvoiceService {
         InvoiceEntity updated = repository.save(entity);
         return InvoiceMapper.toDTO(updated);
     }
+
+    public void deleteInvoice(UUID invoiceId) {
+        if (!repository.existsById(invoiceId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found");
+        }
+        repository.deleteById(invoiceId);
+    }
+
 
 
 }
