@@ -12,7 +12,7 @@ public class InvoiceEntity {
 
     @Id
     @Column(nullable = false, unique = true)
-    private UUID invoiceId;
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private UUID customerId;
@@ -43,7 +43,7 @@ public class InvoiceEntity {
     }
 
     public UUID getInvoiceId(){
-        return this.invoiceId;
+        return this.id;
     }
 
     public void setCustomerId(UUID customerId) {
