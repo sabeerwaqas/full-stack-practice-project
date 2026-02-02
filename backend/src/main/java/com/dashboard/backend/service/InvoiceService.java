@@ -53,12 +53,12 @@ public class InvoiceService {
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {
 
-        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.customerId)
+        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.customer_id)
                 .orElseThrow(() -> new RuntimeException("Invoice not found"));
         entity.setAmount(dto.amount);
         entity.setStatus(dto.status);
         entity.setDate(dto.date);
-        entity.setCustomerId(dto.customerId);
+        entity.setCustomerId(dto.customer_id);
         InvoiceEntity updated = repository.save(entity);
         return InvoiceMapper.toDTO(updated);
     }

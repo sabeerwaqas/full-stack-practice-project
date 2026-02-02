@@ -14,8 +14,12 @@ public class InvoiceEntity {
     @Column(nullable = false, unique = true)
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false,insertable=false, updatable=false)
+    private CustomerEntity customer;
+
     @Column(nullable = false, unique = true)
-    private UUID customerId;
+    private UUID customer_id;
 
     @Column(nullable = false)
     private Integer amount;
@@ -26,9 +30,6 @@ public class InvoiceEntity {
     @Column(nullable = false)
     private Date date;
 
-    public UUID getCustomerId(){
-        return this.customerId;
-    }
 
     public Integer getAmount(){
         return this.amount;
@@ -46,8 +47,8 @@ public class InvoiceEntity {
         return this.id;
     }
 
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
     public void setAmount(Integer amount) {
@@ -60,5 +61,9 @@ public class InvoiceEntity {
 
     public void setDate(Date date){
         this.date = date;
+    }
+
+    public void setCustomerId(UUID id){
+        this.customer_id = id;
     }
 }
