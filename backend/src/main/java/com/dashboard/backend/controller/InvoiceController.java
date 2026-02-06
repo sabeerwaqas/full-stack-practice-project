@@ -22,11 +22,6 @@ public class InvoiceController {
         this.service = service;
     }
 
-    @PostMapping
-    public InvoiceDTO addInvoice(@Valid @RequestBody InvoiceDTO dto){
-        return service.addInvoice(dto);
-    }
-
     @GetMapping
     public List<InvoiceDTO> getInvoice(){
         return service.getInvoices();
@@ -47,6 +42,11 @@ public class InvoiceController {
         return service.getPaidAmount();
     }
 
+    @PostMapping
+    public InvoiceDTO addInvoice(@Valid @RequestBody InvoiceDTO dto){
+        return service.addInvoice(dto);
+    }
+
     @PutMapping
     public InvoiceDTO updateEntity(@Valid @RequestBody InvoiceDTO dto){
         return service.updateInvoice(dto);
@@ -56,7 +56,5 @@ public class InvoiceController {
     public void deleteInvoice(@PathVariable UUID invoiceId) {
         service.deleteInvoice(invoiceId);
     }
-
-
 
 }
