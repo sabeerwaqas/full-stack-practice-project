@@ -64,12 +64,16 @@ public class InvoiceService {
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {
 
-        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.customer_id)
+        CustomerEntity customer = customerRepository.findById(dto.customer_id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Customer not found"));
+
+        InvoiceEntity entity = (InvoiceEntity) repository.findById(dto.invoiceId)
                 .orElseThrow(() -> new RuntimeException("Invoice not found"));
         entity.setAmount(dto.amount);
         entity.setStatus(dto.status);
-        entity.setDate(dto.date);
-//        entity.setCustomerId(dto.customer_id);
+
+        entity.setCustomer(customer);
         InvoiceEntity updated = repository.save(entity);
         return InvoiceMapper.toDTO(updated);
     }
