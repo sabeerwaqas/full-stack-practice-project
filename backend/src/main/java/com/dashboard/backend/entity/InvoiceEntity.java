@@ -2,6 +2,8 @@ package com.dashboard.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
 import java.util.UUID;
@@ -11,15 +13,13 @@ import java.util.UUID;
 public class InvoiceEntity {
 
     @Id
-    @Column(nullable = false, unique = true)
+    @GeneratedValue
+    @UuidGenerator
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false,insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
-
-    @Column(nullable = false, unique = true)
-    private UUID customer_id;
 
     @Column(nullable = false)
     private Integer amount;
@@ -27,9 +27,17 @@ public class InvoiceEntity {
     @Column(nullable = false)
     private String status;
 
-    @Column(nullable = false)
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private Date date;
 
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
+
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
 
     public Integer getAmount(){
         return this.amount;
@@ -47,10 +55,6 @@ public class InvoiceEntity {
         return this.id;
     }
 
-    public CustomerEntity getCustomer() {
-        return customer;
-    }
-
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
@@ -63,7 +67,4 @@ public class InvoiceEntity {
         this.date = date;
     }
 
-    public void setCustomerId(UUID id){
-        this.customer_id = id;
-    }
 }

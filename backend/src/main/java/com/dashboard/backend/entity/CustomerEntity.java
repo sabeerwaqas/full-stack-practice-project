@@ -12,7 +12,9 @@ import java.util.UUID;
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @org.hibernate.annotations.UuidGenerator
+    @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
     @Column(nullable = false)
@@ -21,32 +23,40 @@ public class CustomerEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String image_url;
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
 
+    // ===== Getters =====
+
+    public UUID getId() {
+        return id;
+    }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getEmail(){
-        return this.email;
+        return email;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setName(@NotBlank String name) {
+    // ===== Setters =====
+
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setEmail(@NotBlank @Email String email) {
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setImage_url(String image_url){
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
     }
 
-    public UUID getId() {
-        return this.id;
-    }
+
 }

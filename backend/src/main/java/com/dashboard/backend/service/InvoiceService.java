@@ -4,8 +4,10 @@ import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
 import com.dashboard.backend.dto.PaidAmountDTO;
 import com.dashboard.backend.dto.PendingAmountDTO;
+import com.dashboard.backend.entity.CustomerEntity;
 import com.dashboard.backend.entity.InvoiceEntity;
 import com.dashboard.backend.mapper.InvoiceMapper;
+import com.dashboard.backend.repository.CustomerRepository;
 import com.dashboard.backend.repository.InvoiceRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,17 +21,26 @@ import java.util.stream.Collectors;
 @Service
 public class InvoiceService {
     private final InvoiceRepository repository;
+    private final CustomerRepository customerRepository;
 
 
-    public InvoiceService(InvoiceRepository repository) {
+    public InvoiceService(InvoiceRepository repository, CustomerRepository customerRepository) {
         this.repository = repository;
+        this.customerRepository = customerRepository;
     }
 
     public InvoiceDTO addInvoice(InvoiceDTO dto) {
-        InvoiceEntity entity = InvoiceMapper.toEntity(dto);
+
+        CustomerEntity customer = customerRepository.findById(dto.customer_id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Customer not found"));
+
+        InvoiceEntity entity = InvoiceMapper.toEntity(dto, customer);
         InvoiceEntity saved = repository.save(entity);
+
         return InvoiceMapper.toDTO(saved);
     }
+
 
     public List<InvoiceDTO> getInvoices() {
         return repository.findAll()
@@ -58,7 +69,7 @@ public class InvoiceService {
         entity.setAmount(dto.amount);
         entity.setStatus(dto.status);
         entity.setDate(dto.date);
-        entity.setCustomerId(dto.customer_id);
+//        entity.setCustomerId(dto.customer_id);
         InvoiceEntity updated = repository.save(entity);
         return InvoiceMapper.toDTO(updated);
     }
@@ -69,7 +80,5 @@ public class InvoiceService {
         }
         repository.deleteById(invoiceId);
     }
-
-
 
 }
