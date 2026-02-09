@@ -1,5 +1,6 @@
 package com.dashboard.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -16,6 +17,7 @@ public class CustomerDTO {
     @Email
     public String email;
 
+    @JsonProperty("image_url")
     public String image_url;
 
     public List<InvoiceDTO> invoices;
