@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +26,10 @@ public class CustomerEntity {
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<InvoiceEntity> invoices;
+
 
     // ===== Getters =====
 
@@ -57,6 +62,8 @@ public class CustomerEntity {
     public void setImageUrl(String imageUrl){
         this.imageUrl = imageUrl;
     }
+
+    public List<InvoiceEntity> getInvoices() { return invoices; }
 
 
 }

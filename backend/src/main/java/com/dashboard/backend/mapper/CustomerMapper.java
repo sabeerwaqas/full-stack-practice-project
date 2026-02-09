@@ -20,6 +20,15 @@ public class CustomerMapper {
         dto.name = c.getName();
         dto.email = c.getEmail();
         dto.image_url = c.getImageUrl();
+
+        if (c.getInvoices() != null) {
+            dto.setInvoices(
+                    c.getInvoices()
+                            .stream()
+                            .map(InvoiceMapper::toDTO)
+                            .toList()
+            );
+        }
         return dto;
     }
 }
