@@ -42,7 +42,7 @@ HELP.md
 # --------------------------
 .env
 .env*.local
-application.properties
+./backend/src/main/resources/application.properties
 
 # --------------------------
 # Deployment / Platforms

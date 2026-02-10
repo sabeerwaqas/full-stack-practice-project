@@ -18,18 +18,18 @@ public class CustomerController {
         this.service = service;
     }
 
+    @PostMapping("/add")
+    public CustomerDTO addCustomer(@Valid @RequestBody CustomerDTO dto) {
+        return service.addCustomer(dto);
+    }
+
     @GetMapping("/all")
     public List<CustomerDTO> getAllCustomers() {
         return service.getAllCustomers();
     }
 
     @GetMapping("/count")
-    public CustomerCountDTO getCustomersCount() {
+    public CustomerCountDTO getCustomersCount(){
         return service.getCustomersCount();
-    }
-
-    @PostMapping("/add")
-    public CustomerDTO addCustomer(@Valid @RequestBody CustomerDTO dto) {
-        return service.addCustomer(dto);
     }
 }
