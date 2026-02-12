@@ -1,5 +1,5 @@
 import { fetchFilteredCustomers } from '@/app/lib/data';
-import CustomerTable from '@/app/component/table/customer-table';
+import CustomerTable from '@/component/table/customer-table';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

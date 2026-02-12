@@ -4,7 +4,7 @@ import {
   UserGroupIcon,
   InboxIcon,
 } from '@heroicons/react/24/outline';
-import { lusitana } from '@/app/component/fonts';
+import { lusitana } from '@/component/fonts';
 import { fetchCardData } from '@/app/lib/data';
 
 const iconMap = {

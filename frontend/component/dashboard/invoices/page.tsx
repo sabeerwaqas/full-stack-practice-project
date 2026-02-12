@@ -1,9 +1,9 @@
 import { fetchInvoicesPages } from '@/app/lib/data';
-import { lusitana } from '@/app/component/fonts';
-import { CreateInvoice } from '@/app/component/invoices/buttons';
-import Table from '@/app/component/table/invoice-table';
-import Search from '@/app/component/search';
-import { InvoicesTableSkeleton } from '@/app/component/skeletons';
+import { lusitana } from '@/component/fonts';
+import { CreateInvoice } from '@/component/invoices/buttons';
+import Table from '@/component/table/invoice-table';
+import Search from '@/component/search';
+import { InvoicesTableSkeleton } from '@/component/skeletons';
 import { Suspense } from 'react';
 import Pagination from '../../invoices/pagination';
  

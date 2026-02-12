@@ -1,8 +1,8 @@
 import { fetchCardData, fetchRevenue } from '@/app/lib/data';
-import { Card } from '@/app/component/dashboard/cards';
-import LatestInvoices from '@/app/component/dashboard/latest-invoices';
-import RevenueChart from '@/app/component/dashboard/revenue-chart';
-import { RevenueChartSkeleton } from '@/app/component/skeletons';
+import { Card } from '@/component/dashboard/cards';
+import LatestInvoices from '@/component/dashboard/latest-invoices';
+import RevenueChart from '@/component/dashboard/revenue-chart';
+import { RevenueChartSkeleton } from '@/component/skeletons';
 import { Suspense } from 'react';
  
 export default async function Page() {

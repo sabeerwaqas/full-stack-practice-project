@@ -1,7 +1,6 @@
-import '@/app/global.css';
-import { inter } from '@/app/component/fonts';
+import '../global.css';
+import { inter } from '@/component/fonts';
 import { Metadata } from 'next';
-
 export const metadata: Metadata = {
   title: {
     template: '%s | Acme Dashboard',
