@@ -1,5 +1,5 @@
 import { fetchFilteredCustomers } from '@/app/lib/data';
-import CustomerTable from '@/app/components/table/customer-table';
+import CustomersTable from '@/app/components/customers/table';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default async function Page(props: {
 
   return (
     <main>
-      <CustomerTable customers={customers} />
+      <CustomersTable customers={customers} />
     </main>
   );
 }
