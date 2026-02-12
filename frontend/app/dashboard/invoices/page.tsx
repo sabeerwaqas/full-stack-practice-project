@@ -1,6 +1,6 @@
 import Pagination from '@/app/components/invoices/pagination';
 import Search from '@/app/components/search';
-import Table from '@/app/components/invoices/table';
+import Table from '@/app/components/table/invoice-table';
 import { CreateInvoice } from '@/app/components/invoices/buttons';
 import { lusitana } from '@/app/components/fonts';
 import { InvoicesTableSkeleton } from '@/app/components/skeletons';
