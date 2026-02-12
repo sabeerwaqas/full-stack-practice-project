@@ -1,9 +1,9 @@
-import Pagination from '@/app/components/invoices/pagination';
-import Search from '@/app/components/search';
-import Table from '@/app/components/table/invoice-table';
-import { CreateInvoice } from '@/app/components/invoices/buttons';
+import Pagination from '@/app/component/invoices/pagination';
+import Search from '@/app/component/search';
+import Table from '@/app/component/table/invoice-table';
+import { CreateInvoice } from '@/app/component/invoices/buttons';
 import { Suspense } from 'react';
-import { InvoicesTableSkeleton } from '@/app/components/skeletons';
+import { InvoicesTableSkeleton } from '@/app/component/skeletons';
 import { fetchInvoicesPages } from '@/app/lib/data';
 
 export default async function Page(props: {

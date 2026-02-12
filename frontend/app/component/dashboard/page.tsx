@@ -1,7 +1,7 @@
 import { fetchCardData } from '@/app/lib/data';
-import { Card } from '@/app/components/dashboard/cards';
-import LatestInvoices from '@/app/components/dashboard/latest-invoices';
-import RevenueChart from '@/app/components/dashboard/revenue-chart';
+import { Card } from '@/app/component/dashboard/cards';
+import LatestInvoices from '@/app/component/dashboard/latest-invoices';
+import RevenueChart from '@/app/component/dashboard/revenue-chart';
 import SideNav from './sidenav';
 
 export default async function Page() {
