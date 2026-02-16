@@ -1,6 +1,6 @@
 import { fetchRevenue } from '@/app/lib/data';
 import { generateYAxis } from '@/app/lib/utils';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/component/fonts';
 import { CalendarIcon } from '@heroicons/react/24/outline';
 
 export default async function RevenueChart() {
