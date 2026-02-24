@@ -1,8 +1,10 @@
-import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/component/invoices/buttons';
-import InvoiceStatus from '@/component/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredInvoices } from '@/app/lib/data';
+import Image from "next/image";
+import { UpdateInvoice, DeleteInvoice } from "@/component/invoices/buttons";
+import InvoiceStatus from "@/component/invoices/status";
+import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
+import { fetchFilteredInvoices } from "@/app/lib/data";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { Button } from "../button";
 
 export default async function InvoicesTable({
   query,
@@ -47,7 +49,14 @@ export default async function InvoicesTable({
                     <p>{formatDateToLocal(invoice.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={invoice.id} />
+                    <Button
+                      buttonType="link"
+                      type="submit"
+                      href={`/dashboard/invoices/${invoice.id}/edit`}
+                      className="rounded-md border !p-2 bg-white hover:bg-gray-100 !text-gray-700"
+                    >
+                      <PencilIcon className="w-5" />
+                    </Button>
                     <DeleteInvoice id={invoice.id} />
                   </div>
                 </div>
@@ -109,7 +118,14 @@ export default async function InvoicesTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={invoice.id} />
+                      <Button
+                        buttonType="link"
+                        type="submit"
+                        href={`/dashboard/invoices/${invoice.id}/edit`}
+                        className="rounded-md border !p-2 hover:bg-gray-100 bg-white !text-gray-700"
+                      >
+                        <PencilIcon className="w-5" />
+                      </Button>
                       <DeleteInvoice id={invoice.id} />
                     </div>
                   </td>
