@@ -156,7 +156,7 @@ export default function EditInvoiceForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Edit Invoice</Button>
+        <Button type="submit" buttonType='button' className='transition-colors hover:bg-blue-500'>Edit Invoice</Button>
       </div>
     </form>
   );
