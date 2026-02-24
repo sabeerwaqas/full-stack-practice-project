@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import { CustomerField } from '@/app/lib/definitions';
-import Link from 'next/link';
+import { CustomerField } from "@/app/lib/definitions";
+import Link from "next/link";
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
+  PlusIcon,
   UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import { Button } from '@/component/button';
-import { createInvoice, State } from '@/app/lib/actions';
-import { useActionState } from 'react';
+} from "@heroicons/react/24/outline";
+import { Button } from "@/component/button";
+import { createInvoice, State } from "@/app/lib/actions";
+import { useActionState } from "react";
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState: State = { message: null, errors: {} };
@@ -146,7 +147,14 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button
+          buttonType="button"
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-500"
+        >
+          Create Invoice
+          <PlusIcon className="h-5 md:ml-4" />
+        </Button>
       </div>
     </form>
   );

@@ -1,12 +1,13 @@
-import { fetchInvoicesPages } from '@/app/lib/data';
-import { lusitana } from '@/component/fonts';
-import { CreateInvoice } from '@/component/invoices/buttons';
-import Table from '@/component/invoices/table';
-import Search from '@/component/search';
-import { InvoicesTableSkeleton } from '@/component/skeletons';
-import { Suspense } from 'react';
-import Pagination from '../../invoices/pagination';
- 
+import { fetchInvoicesPages } from "@/app/lib/data";
+import { lusitana } from "@/component/fonts";
+import Table from "@/component/invoices/table";
+import Search from "@/component/search";
+import { InvoicesTableSkeleton } from "@/component/skeletons";
+import { Suspense } from "react";
+import Pagination from "../../invoices/pagination";
+import { Button } from "@/component/button";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 export default async function Page(props: {
   searchParams?: Promise<{
     query?: string;
@@ -14,10 +15,10 @@ export default async function Page(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const query = searchParams?.query || '';
+  const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchInvoicesPages(query);
- 
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -25,7 +26,15 @@ export default async function Page(props: {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search invoices..." />
-        <CreateInvoice />
+        <Button
+          href="/dashboard/invoices/create"
+          buttonType="button"
+          type="submit"
+          className="transition-colors hover:bg-blue-500"
+        >
+          <span className="hidden md:block">Create Invoice</span>
+          <PlusIcon className="h-5 md:ml-4" />
+        </Button>
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
