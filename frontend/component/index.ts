@@ -11,3 +11,4 @@ export * from "./invoices/pagination";
 export * from "../component/invoices/index";
 export * from './button';
 export * from './skeletons';
+export * from "./breadcrumbs";
