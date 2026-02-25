@@ -1,13 +1,15 @@
-import Pagination from "@/component/invoices/pagination";
-import Search from "@/component/search";
-import Table from "@/component/invoices/table";
-import { lusitana } from "@/component/fonts";
-import { InvoicesTableSkeleton } from "@/component/skeletons";
 import { Suspense } from "react";
 import { fetchInvoicesPages } from "@/app/lib/data";
 import { Metadata } from "next";
-import { Button } from "@/component/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import {
+  Button,
+  InvoicesTable,
+  InvoicesTableSkeleton,
+  Pagination,
+  Search,
+  lusitana,
+} from "@/component";
 
 export const metadata: Metadata = {
   title: "Invoices",
@@ -44,7 +46,7 @@ export default async function Page(props: {
         </Button>
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <InvoicesTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

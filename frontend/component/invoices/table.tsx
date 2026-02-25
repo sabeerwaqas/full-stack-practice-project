@@ -1,18 +1,18 @@
 import Image from "next/image";
-import { UpdateInvoice, DeleteInvoice } from "@/component/invoices/buttons";
+import { DeleteInvoice } from "@/component/invoices/buttons";
 import InvoiceStatus from "@/component/invoices/status";
 import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
 import { fetchFilteredInvoices } from "@/app/lib/data";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
 
-export default async function InvoicesTable({
+export const InvoicesTable = async ({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
-}) {
+}) => {
   const invoices = await fetchFilteredInvoices(query, currentPage);
 
   return (
@@ -137,4 +137,4 @@ export default async function InvoicesTable({
       </div>
     </div>
   );
-}
+};

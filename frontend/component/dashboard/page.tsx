@@ -1,8 +1,8 @@
 import { fetchCardData } from '@/app/lib/data';
 import { Card } from '@/component/card';
-import LatestInvoices from '@/component/dashboard/latest-invoices';
-import RevenueChart from '@/component/dashboard/revenue-chart';
 import SideNav from './sidenav';
+import { RevenueChart } from './revenue-chart';
+import { LatestInvoices } from './latest-invoices';
 
 export default async function Page() {
     const { totalPaidInvoices, totalPendingInvoices, numberOfInvoices, numberOfCustomers } = await fetchCardData();

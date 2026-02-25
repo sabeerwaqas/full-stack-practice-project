@@ -1,9 +1,9 @@
 import { fetchCardData, fetchRevenue } from '@/app/lib/data';
 import { Card } from '@/component/card';
-import LatestInvoices from '@/component/dashboard/latest-invoices';
-import RevenueChart from '@/component/dashboard/revenue-chart';
 import { RevenueChartSkeleton } from '@/component/skeletons';
 import { Suspense } from 'react';
+import { RevenueChart } from '../revenue-chart';
+import { LatestInvoices } from '../latest-invoices';
  
 export default async function Page() {
   const revenue = await fetchRevenue(); 

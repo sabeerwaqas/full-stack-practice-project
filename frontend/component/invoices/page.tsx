@@ -1,11 +1,11 @@
-import Pagination from "@/component/invoices/pagination";
-import Search from "@/component/search";
-import Table from "@/component/invoices/table";
 import { Suspense } from "react";
 import { InvoicesTableSkeleton } from "@/component/skeletons";
 import { fetchInvoicesPages } from "@/app/lib/data";
 import { Button } from "../button";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { InvoicesTable } from "./table";
+import { Pagination } from "./pagination";
+import { Search } from "../search";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -36,7 +36,7 @@ export default async function Page(props: {
         </Button>
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <InvoicesTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
