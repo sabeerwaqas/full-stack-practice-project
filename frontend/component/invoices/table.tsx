@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { DeleteInvoice } from "@/component/invoices/buttons";
 import InvoiceStatus from "@/component/invoices/status";
 import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
 import { fetchFilteredInvoices } from "@/app/lib/data";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { deleteInvoice } from "@/app/lib/actions";
 import { Button } from "../button";
 
 export const InvoicesTable = async ({
@@ -138,3 +139,17 @@ export const InvoicesTable = async ({
     </div>
   );
 };
+
+
+ function DeleteInvoice({ id }: { id: string }) {
+  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
+
+  return (
+    <form action={deleteInvoiceWithId}>
+      <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+        <span className="sr-only">Delete</span>
+        <TrashIcon className="w-5" />
+      </button>
+    </form>
+  );
+}
