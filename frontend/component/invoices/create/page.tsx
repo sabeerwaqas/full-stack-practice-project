@@ -1,5 +1,4 @@
-import Form from '@/component/invoices/create-form';
-import Breadcrumbs from '@/component/invoices/breadcrumbs';
+import { Breadcrumbs, CreateForm } from '@/component';
 import { fetchCustomers } from '@/app/lib/data';
  
 export default async function Page() {
@@ -17,7 +16,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} />
+      <CreateForm customers={customers} />
     </main>
   );
 }

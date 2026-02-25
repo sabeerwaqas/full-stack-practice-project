@@ -1,10 +1,14 @@
 import { fetchInvoicesPages } from "@/app/lib/data";
-import { lusitana } from "@/component/fonts";
-import { InvoicesTableSkeleton } from "@/component/skeletons";
 import { Suspense } from "react";
-import { Button } from "@/component/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { InvoicesTable, Pagination, Search } from "@/component";
+import {
+  InvoicesTable,
+  Pagination,
+  Search,
+  InvoicesTableSkeleton,
+  lusitana,
+  Button,
+} from "@/component";
 
 export default async function Page(props: {
   searchParams?: Promise<{

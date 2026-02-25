@@ -1,8 +1,7 @@
-import Form from '@/component/invoices/edit-form';
-import Breadcrumbs from '@/component/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { Breadcrumbs, EditInvoiceForm,  } from '@/component';
 
 export const metadata: Metadata = {
   title: 'Edit Invoice',
@@ -32,7 +31,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <EditInvoiceForm invoice={invoice} customers={customers} />
     </main>
   );
 }

@@ -1,6 +1,5 @@
 import { fetchCustomers } from '@/app/lib/data';
-import Form from '@/component/invoices/create-form';
-import Breadcrumbs from '@/component/invoices/breadcrumbs';
+import { Breadcrumbs, CreateForm } from '@/component';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -22,7 +21,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} />
+      <CreateForm customers={customers} />
     </main>
   );
 }
