@@ -1,5 +1,5 @@
 import { fetchCardData } from '@/app/lib/data';
-import { Card } from '@/component/dashboard/cards';
+import { Card } from '@/component/card';
 import LatestInvoices from '@/component/dashboard/latest-invoices';
 import RevenueChart from '@/component/dashboard/revenue-chart';
 import SideNav from './sidenav';

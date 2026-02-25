@@ -1,4 +1,4 @@
-import CardWrapper from '@/component/dashboard/cards';
+import { CardWrapper } from '@/component';
 import LatestInvoices from '@/component/dashboard/latest-invoices';
 import RevenueChart from '@/component/dashboard/revenue-chart';
 import { lusitana } from '@/component/fonts';
