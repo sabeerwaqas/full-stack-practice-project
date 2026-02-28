@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -41,7 +41,6 @@ public class InvoiceService {
         return InvoiceMapper.toDTO(saved);
     }
 
-
     public List<InvoiceDTO> getInvoices() {
         return repository.findAll()
                 .stream().map(InvoiceMapper::toDTO)
@@ -53,13 +52,20 @@ public class InvoiceService {
     }
 
     public PendingAmountDTO getPendingAmount() {
-        long pendingAmount = repository.sumPendingAmount();
-        return new PendingAmountDTO(pendingAmount);
+        long pendingAmountInCents = repository.sumPendingAmount();
+        BigDecimal amountInDollars = BigDecimal.valueOf(pendingAmountInCents)
+                .divide(BigDecimal.valueOf(100));
+
+        return new PendingAmountDTO(amountInDollars);
     }
 
-    public PaidAmountDTO getPaidAmount(){
-        long paidAmount = repository.sumPaidAmount();
-        return new PaidAmountDTO(paidAmount);
+    public PaidAmountDTO getPaidAmount() {
+        long paidAmountInCents = repository.sumPaidAmount();
+
+        BigDecimal paidAmountInDollars = BigDecimal.valueOf(paidAmountInCents)
+                .divide(BigDecimal.valueOf(100));
+
+        return new PaidAmountDTO(paidAmountInDollars);
     }
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {

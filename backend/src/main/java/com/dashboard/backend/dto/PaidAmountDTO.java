@@ -1,3 +1,6 @@
 package com.dashboard.backend.dto;
 
-public record PaidAmountDTO(long paidAmount) {}
+import java.math.BigDecimal;
+
+public record PaidAmountDTO(BigDecimal paidAmount) {
+}
