@@ -1,7 +1,7 @@
 import { ApiError, ApiRequestOptions } from "./types";
 
-// const API_BASE_URL = "https://app-260118003111.azurewebsites.net";
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "https://app-260118003111.azurewebsites.net";
+// const API_BASE_URL = "http://localhost:8080";
 
 export async function apiRequest<TResponse, TBody = unknown>(
   endpoint: string,
