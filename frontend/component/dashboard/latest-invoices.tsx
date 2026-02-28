@@ -1,11 +1,25 @@
+"use client";
+
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Image from "next/image";
 import { lusitana } from "@/component/fonts";
-import { fetchLatestInvoices } from "@/app/lib/data";
+import { InvoiceResponse, useInvoice } from "@/api-client";
+import { useEffect, useState } from "react";
 
-export const LatestInvoices = async () => {
-  const latestInvoices = await fetchLatestInvoices();
+export const LatestInvoices = () => {
+  const { fetchInvoices } = useInvoice({ shouldDefaultFetch: true });
+  const [latestInvoices, setLatestInvoices] = useState<InvoiceResponse[]>([]);
+
+  useEffect(() => {
+    const loadLatestInvoices = async () => {
+      const data = await fetchInvoices();
+      if (data) {
+        setLatestInvoices(data.slice(0, 8));
+      }
+    };
+    loadLatestInvoices();
+  }, []);
 
   return (
     <div className="flex w-full flex-col md:col-span-4">
@@ -17,7 +31,7 @@ export const LatestInvoices = async () => {
           {latestInvoices.map((invoice, i) => {
             return (
               <div
-                key={invoice.id}
+                key={invoice.invoiceId}
                 className={clsx(
                   "flex flex-row items-center justify-between py-4",
                   {
@@ -26,19 +40,19 @@ export const LatestInvoices = async () => {
                 )}
               >
                 <div className="flex items-center">
-                  <Image
+                  {/* <Image
                     src={invoice.image_url}
                     alt={`${invoice.name}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}
                     height={32}
-                  />
+                  /> */}
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold md:text-base">
-                      {invoice.name}
+                      {invoice.customerName}
                     </p>
                     <p className="hidden text-sm text-gray-500 sm:block">
-                      {invoice.email}
+                      {invoice.customerEmail}
                     </p>
                   </div>
                 </div>

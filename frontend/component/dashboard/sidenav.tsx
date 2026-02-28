@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import NavLinks from "./nav-links";
 import AcmeLogo from "../acme-logo";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function SideNav() {
   const navigate = useRouter();

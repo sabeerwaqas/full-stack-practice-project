@@ -2,14 +2,22 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
+  CustomerField,
+  InvoiceRequest,
+  InvoiceResponse,
   PaidInvoiceAmountResponse,
   PendingInvoiceAmountResponse,
   TotalInvoiceCountResponse,
 } from "../types";
 import {
+  createInvoice,
+  deleteInvoices,
+  getInvoiceById,
+  getInvoices,
   getPaidInvoiceAmount,
   getPendingInvoiceAmount,
   getTotalInvoices,
+  updateInvoice,
 } from "../invoice-api";
 
 interface UseInvoiceState {
@@ -18,10 +26,16 @@ interface UseInvoiceState {
   totalInvoices: number;
   isLoading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
+  shouldDefaultFetch?: boolean;
+  refetch: () => Promise<InvoiceResponse[] | void>;
+  deleteInvoice: (id: string) => Promise<Boolean>;
+  fetchInvoices: () => Promise<InvoiceResponse[] | void>;
+  createUserInvoice: (data: CustomerField) => Promise<Boolean>;
+  updateUserInvoice: (data: InvoiceRequest) => Promise<Boolean>;
+  fetchInvoiceById: (invoiceId: string) => Promise<InvoiceResponse | void>;
 }
 
-export function useInvoice(): UseInvoiceState {
+export function useInvoice({ shouldDefaultFetch = false }): UseInvoiceState {
   const [pendingAmount, setPendingAmount] = useState<number>(0);
   const [paidAmount, setPaidAmount] = useState<number>(0);
   const [totalInvoices, setTotalInvoices] = useState<number>(0);
@@ -80,10 +94,98 @@ export function useInvoice(): UseInvoiceState {
     }
   }, []);
 
+  const fetchInvoices = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    const response: InvoiceResponse[] = await getInvoices();
+
+    if (response) {
+      setIsLoading(false);
+      return response;
+    }
+  }, []);
+
+  const fetchInvoiceById = useCallback(async (invoiceId: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    const response = await getInvoiceById({invoiceId});
+    if (response) {
+      setIsLoading(false);
+      return response;
+    }
+  }, []);
+
+  const deleteInvoice = useCallback(async (id: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    const response = await deleteInvoices({ id });
+
+    if (response.error) {
+      setError(response.error);
+      return false;
+    }
+
+    setIsLoading(false);
+
+    fetchInvoices();
+    return true;
+  }, []);
+
+  const createUserInvoice = useCallback(async (data: CustomerField) => {
+    setIsLoading(true);
+    setError(null);
+
+    const payload = {
+      customer_id: data.customer_id,
+      amount: data.amount,
+      status: data.status,
+    };
+
+    const response = await createInvoice({ data: payload });
+
+    if (response.error) {
+      setError(response.error);
+      return false;
+    }
+
+    setIsLoading(false);
+
+    return true;
+  }, []);
+
+  const updateUserInvoice = useCallback(async (data: InvoiceRequest) => {
+    setIsLoading(true);
+    setError(null);
+
+    const payload = {
+      invoiceId: data.invoiceId,
+      customer_id: data.customer_id,
+      amount: data.amount,
+      status: data.status,
+    };
+
+    const response = await updateInvoice({ data: payload });
+
+    if (response.error) {
+      setError(response.error);
+      return false;
+    }
+
+    fetchInvoices();
+    setIsLoading(false);
+
+    return true;
+  }, []);
+
   useEffect(() => {
-    fetchPendingAmount();
-    fetchPaidAmount();
-    fetchTotalInvoices();
+    if (shouldDefaultFetch) {
+      fetchPendingAmount();
+      fetchPaidAmount();
+      fetchTotalInvoices();
+    }
   }, [fetchPendingAmount, fetchPaidAmount, fetchTotalInvoices]);
 
   return {
@@ -92,6 +194,11 @@ export function useInvoice(): UseInvoiceState {
     totalInvoices,
     isLoading,
     error,
-    refetch: fetchPendingAmount,
+    refetch: fetchInvoices,
+    deleteInvoice,
+    fetchInvoices,
+    createUserInvoice,
+    updateUserInvoice,
+    fetchInvoiceById
   };
 }

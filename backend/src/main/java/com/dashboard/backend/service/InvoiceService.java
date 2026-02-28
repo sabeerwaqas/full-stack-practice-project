@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,14 @@ public class InvoiceService {
         return repository.findAll()
                 .stream().map(InvoiceMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<InvoiceDTO> getInvoiceById(UUID invoiceID) {
+        InvoiceEntity invoice = repository.findById(invoiceID)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Invoice not found"));
+
+        return Optional.of(InvoiceMapper.toDTO(invoice));
     }
 
     public InvoiceCountDTO getInvoicesCount() {

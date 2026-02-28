@@ -110,15 +110,6 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
-// Validate ../../app/query/route.ts
-{
-  type __IsExpected<Specific extends RouteHandlerConfig<"/query">> = Specific
-  const handler = {} as typeof import("../../app/query/route.js")
-  type __Check = __IsExpected<typeof handler>
-  // @ts-ignore
-  type __Unused = __Check
-}
-
 // Validate ../../app/seed/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/seed">> = Specific

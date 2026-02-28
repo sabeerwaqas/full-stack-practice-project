@@ -1,11 +1,14 @@
 "use client";
 
 import { useCustomer } from "@/api-client";
-import { CustomersTable } from "@/component";
+import { CustomersTable, TableRowSkeleton } from "@/component";
 
 export default function Page() {
+  const { customers, isLoading } = useCustomer({ shouldDefaultFetch: true });
 
-  const { customers } = useCustomer({ shouldDefaultFetch: true });
+  if (isLoading) {
+    return <TableRowSkeleton />;
+  }
 
   return (
     <main>

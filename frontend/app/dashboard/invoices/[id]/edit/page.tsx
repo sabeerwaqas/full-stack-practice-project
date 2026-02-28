@@ -1,37 +1,22 @@
-import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-import { Breadcrumbs, EditInvoiceForm,  } from '@/component';
-
-export const metadata: Metadata = {
-  title: 'Edit Invoice',
-};
+import { Breadcrumbs, EditInvoiceForm } from "@/component";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
-  ]);
-
-  if (!invoice) {
-    notFound();
-  }
 
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
+          { label: "Invoices", href: "/dashboard/invoices" },
           {
-            label: 'Edit Invoice',
+            label: "Edit Invoice",
             href: `/dashboard/invoices/${id}/edit`,
             active: true,
           },
         ]}
       />
-      <EditInvoiceForm invoice={invoice} customers={customers} />
+      <EditInvoiceForm invoiceId={id} />
     </main>
   );
 }

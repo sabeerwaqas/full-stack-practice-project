@@ -6,7 +6,7 @@ import { CardsSkeleton } from "./skeletons";
 import { useCustomer } from "@/api-client/hooks/use-customer";
 
 export const CardWrapper = () => {
-  const { pendingAmount, paidAmount, totalInvoices, isLoading } = useInvoice();
+  const { pendingAmount, paidAmount, totalInvoices, isLoading } = useInvoice({shouldDefaultFetch: true});
   const { totalCustomers, isLoading: isLoadingCustomers } = useCustomer({shouldDefaultFetch: true});
 
   if (isLoading || isLoadingCustomers) return <CardsSkeleton />;

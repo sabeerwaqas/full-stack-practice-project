@@ -1,6 +1,5 @@
-import { Suspense } from "react";
-import { fetchInvoicesPages } from "@/app/lib/data";
-import { Metadata } from "next";
+"use client";
+
 import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   Button,
@@ -10,22 +9,38 @@ import {
   Search,
   lusitana,
 } from "@/component";
+import { InvoiceResponse, useInvoice } from "@/api-client";
+import { useEffect, useState } from "react";
 
-export const metadata: Metadata = {
-  title: "Invoices",
-};
+export default function Page() {
+  const [invoices, setInvloices] = useState<InvoiceResponse[]>([]);
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
+  const { fetchInvoices, deleteInvoice, isLoading, error, refetch } = useInvoice({
+    shouldDefaultFetch: false,
+  });
 
-  const totalPages = await fetchInvoicesPages(query);
+  const handleDelete = async (id: string) => {
+    const response = await deleteInvoice(id);
+
+    if (response) {
+      refetch();
+    }
+  };
+
+  useEffect(() => {
+    const loadInvoices = async () => {
+      const data = await fetchInvoices();
+      if (data) {
+        setInvloices(data);
+      }
+    };
+
+    loadInvoices();
+  }, [fetchInvoices]);
+
+  if (isLoading) {
+    return <InvoicesTableSkeleton />;
+  }
 
   return (
     <div className="w-full">
@@ -45,12 +60,12 @@ export default async function Page(props: {
           <PlusIcon className="h-5 md:ml-4" />
         </Button>
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <InvoicesTable query={query} currentPage={currentPage} />
-      </Suspense>
-      <div className="mt-5 flex w-full justify-center">
+
+      <InvoicesTable invoices={invoices} onDelete={handleDelete}/>
+
+      {/* <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
-      </div>
+      </div> */}
     </div>
   );
 }

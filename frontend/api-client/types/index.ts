@@ -30,12 +30,19 @@ export interface TotalCustomersCountResponse {
 
 export interface InvoiceResponse {
   invoiceId: string;
-  customerId: string;
+  customer_id: string;
   customerName: string;
   customerEmail: string;
   amount: number;
   date: string;
   status: "paid" | "pending";
+}
+
+export interface InvoiceRequest {
+  invoiceId: string;
+  customer_id: string;
+  amount: string;
+  status: string;
 }
 
 export interface CustomerResponse {
@@ -44,4 +51,10 @@ export interface CustomerResponse {
   image_url: string;
   invoices: InvoiceResponse[];
   name: string;
+}
+
+export interface CustomerField {
+  customer_id: string;
+  amount: string;
+  status: string;
 }
