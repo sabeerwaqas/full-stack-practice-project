@@ -1,11 +1,15 @@
-export const dynamic = "force-dynamic";
+"use client";
 
-import CustomersTable from "@/component/customers/table";
+import { useCustomer } from "@/api-client";
+import { CustomersTable } from "@/component";
 
 export default function Page() {
+
+  const { customers } = useCustomer({ shouldDefaultFetch: true });
+
   return (
     <main>
-      <CustomersTable />
+      <CustomersTable customers={customers} />
     </main>
   );
 }

@@ -3,10 +3,9 @@
 import Image from "next/image";
 import { Search } from "../search";
 import { lusitana } from "../fonts";
-import { useCustomer } from "@/api-client/hooks/use-customer";
+import { CustomerResponse } from "@/api-client";
 
-export default function CustomersTable() {
-  const { customers } = useCustomer({ shouldDefaultFetch: false });
+export function CustomersTable({customers}: { customers: CustomerResponse[] }) {
 
   return (
     <div className="w-full">
@@ -46,11 +45,22 @@ export default function CustomersTable() {
                     <div className="flex w-full items-center justify-between border-b py-5">
                       <div className="flex w-1/2 flex-col">
                         <p className="text-xs">Pending</p>
-                        <p className="font-medium">{customer.invoices.filter(i => i.status === "pending").length}</p>
+                        <p className="font-medium">
+                          {
+                            customer.invoices.filter(
+                              (i) => i.status === "pending",
+                            ).length
+                          }
+                        </p>
                       </div>
                       <div className="flex w-1/2 flex-col">
                         <p className="text-xs">Paid</p>
-                        <p className="font-medium">{customer.invoices.filter(i => i.status === "paid").length}</p>
+                        <p className="font-medium">
+                          {
+                            customer.invoices.filter((i) => i.status === "paid")
+                              .length
+                          }
+                        </p>
                       </div>
                     </div>
                     <div className="pt-4 text-sm">
@@ -102,10 +112,17 @@ export default function CustomersTable() {
                         {customer.invoices.length}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.invoices.filter(i => i.status === "pending").length}
+                        {
+                          customer.invoices.filter(
+                            (i) => i.status === "pending",
+                          ).length
+                        }
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-                        {customer.invoices.filter(i => i.status === "paid").length}
+                        {
+                          customer.invoices.filter((i) => i.status === "paid")
+                            .length
+                        }
                       </td>
                     </tr>
                   ))}

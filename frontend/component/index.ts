@@ -2,6 +2,7 @@ export * from "../component/card";
 export * from "../component/card-wrapper";
 export * from "./dashboard/index";
 export * from "../component/skeletons";
+export * from "./customers/table";
 export * from "./fonts";
 export * from "./acme-logo";
 export * from "./button";
