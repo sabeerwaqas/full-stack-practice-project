@@ -1,3 +1,6 @@
 package com.dashboard.backend.dto;
 
-public record PendingAmountDTO(long pendingAmount) {}
+import java.math.BigDecimal;
+
+public record PendingAmountDTO(BigDecimal pendingAmount) {
+}

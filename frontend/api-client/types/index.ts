@@ -15,3 +15,15 @@ export interface ApiError extends Error {
 export interface PendingInvoiceAmountResponse {
   pendingAmount: number;
 }
+
+export interface PaidInvoiceAmountResponse {
+  paidAmount: number;
+}
+
+export interface TotalInvoiceAmountResponse {
+  totalInvoices: number;
+}
+
+export interface TotalCustomersAmountResponse {
+  totalCustomers: number;
+}

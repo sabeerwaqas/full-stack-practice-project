@@ -1,0 +1,6 @@
+{
+    "name": "api-client",
+    "version": "1.0.0",
+    "description": "API client for the invoice management system",
+    "main": "index.ts"
+}

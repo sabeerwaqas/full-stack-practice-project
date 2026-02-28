@@ -7,7 +7,6 @@ import {
   InboxIcon,
 } from "@heroicons/react/24/outline";
 import { lusitana } from "@/component/fonts";
-import { getPendingInvoiceAmount } from "./api-client/invoice-api";
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -16,7 +15,7 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-export async function Card({
+export function Card({
   title,
   value,
   type,
@@ -26,9 +25,6 @@ export async function Card({
   type: "invoices" | "customers" | "pending" | "collected";
 }) {
   const Icon = iconMap[type];
-
-  const { pendingAmount } = await getPendingInvoiceAmount();
-  console.log(pendingAmount);
 
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">

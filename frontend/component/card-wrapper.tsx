@@ -1,24 +1,28 @@
-import { fetchCardData } from "@/app/lib/data";
-import { Card } from "./card";
+"use client";
 
-export const CardWrapper = async () => {
-  const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
+import { Card } from "./card";
+import { useInvoice } from "@/api-client";
+import { CardsSkeleton } from "./skeletons";
+
+export const CardWrapper = () => {
+  const { pendingAmount, paidAmount, totalInvoices, isLoading } = useInvoice();
+
+  if (isLoading) return <CardsSkeleton />;
 
   return (
     <>
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+      <Card title="Collected" value={`$${paidAmount}`} type="collected" />
+      <Card title="Pending" value={`$${pendingAmount}`} type="pending" />
       <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
+        title="Total Invoices"
+        value={`$${totalInvoices}`}
+        type="invoices"
       />
+      {/* <Card
+        title="Total Customers"
+        value={`$ ${totalCustomers}`}
+        type="customers"
+      /> */}
     </>
   );
 };
