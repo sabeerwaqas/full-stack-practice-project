@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   PaidInvoiceAmountResponse,
   PendingInvoiceAmountResponse,
-  TotalInvoiceAmountResponse,
+  TotalInvoiceCountResponse,
 } from "../types";
 import {
   getPaidInvoiceAmount,
@@ -25,7 +25,6 @@ export function useInvoice(): UseInvoiceState {
   const [pendingAmount, setPendingAmount] = useState<number>(0);
   const [paidAmount, setPaidAmount] = useState<number>(0);
   const [totalInvoices, setTotalInvoices] = useState<number>(0);
-  const [totalCustomers, setTotalCustomers] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,7 +68,7 @@ export function useInvoice(): UseInvoiceState {
     setError(null);
 
     try {
-      const response: TotalInvoiceAmountResponse = await getTotalInvoices();
+      const response: TotalInvoiceCountResponse = await getTotalInvoices();
 
       setTotalInvoices(response.totalInvoices);
     } catch (err) {

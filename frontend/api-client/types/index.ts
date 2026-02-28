@@ -20,10 +20,10 @@ export interface PaidInvoiceAmountResponse {
   paidAmount: number;
 }
 
-export interface TotalInvoiceAmountResponse {
+export interface TotalInvoiceCountResponse {
   totalInvoices: number;
 }
 
-export interface TotalCustomersAmountResponse {
+export interface TotalCustomersCountResponse {
   totalCustomers: number;
 }

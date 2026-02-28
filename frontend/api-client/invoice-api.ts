@@ -2,8 +2,7 @@ import { apiRequest } from "./client";
 import {
   PendingInvoiceAmountResponse,
   PaidInvoiceAmountResponse,
-  TotalInvoiceAmountResponse,
-  TotalCustomersAmountResponse,
+  TotalInvoiceCountResponse,
 } from "./types";
 
 export function getPendingInvoiceAmount() {
@@ -22,7 +21,7 @@ export function getPaidInvoiceAmount() {
 }
 
 export function getTotalInvoices() {
-  return apiRequest<TotalInvoiceAmountResponse>("/api/invoice/count", {
+  return apiRequest<TotalInvoiceCountResponse>("/api/invoice/count", {
     method: "GET",
   });
 }
