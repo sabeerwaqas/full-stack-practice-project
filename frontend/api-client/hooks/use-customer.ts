@@ -1,18 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getTotalCustomers } from "../customer-api";
-import { TotalCustomersCountResponse } from "../types";
+import { getAllCustomers, getTotalCustomers } from "../customer-api";
+import { CustomerResponse, TotalCustomersCountResponse } from "../types";
 
 interface UseCustomerState {
   totalCustomers: number;
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  fetchCustomers: () => Promise<void>;
+  shouldDefaultFetch?: boolean;
+  customers: CustomerResponse[];
 }
 
-export function useCustomer(): UseCustomerState {
+export function useCustomer({ shouldDefaultFetch = true }): UseCustomerState {
   const [totalCustomers, setTotalCustomers] = useState<number>(0);
+  const [customers, setCustomers] = useState<CustomerResponse[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,8 +37,27 @@ export function useCustomer(): UseCustomerState {
     }
   }, []);
 
+  const fetchAllCustomers = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response: CustomerResponse[] = await getAllCustomers();
+      setCustomers(response);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch customers data",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    fetchTotalCustomers();
+    if (shouldDefaultFetch) {
+      fetchTotalCustomers();
+    }
+    fetchAllCustomers();
   }, [fetchTotalCustomers]);
 
   return {
@@ -42,5 +65,7 @@ export function useCustomer(): UseCustomerState {
     isLoading,
     error,
     refetch: fetchTotalCustomers,
+    fetchCustomers: fetchAllCustomers,
+    customers,
   };
 }

@@ -27,3 +27,21 @@ export interface TotalInvoiceCountResponse {
 export interface TotalCustomersCountResponse {
   totalCustomers: number;
 }
+
+export interface InvoiceResponse {
+  invoiceId: string;
+  customerId: string;
+  customerName: string;
+  customerEmail: string;
+  amount: number;
+  date: string;
+  status: "paid" | "pending";
+}
+
+export interface CustomerResponse {
+  email: string;
+  id: string;
+  image_url: string;
+  invoices: InvoiceResponse[];
+  name: string;
+}

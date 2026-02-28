@@ -7,7 +7,7 @@ import { useCustomer } from "@/api-client/hooks/use-customer";
 
 export const CardWrapper = () => {
   const { pendingAmount, paidAmount, totalInvoices, isLoading } = useInvoice();
-  const { totalCustomers, isLoading: isLoadingCustomers } = useCustomer();
+  const { totalCustomers, isLoading: isLoadingCustomers } = useCustomer({shouldDefaultFetch: true});
 
   if (isLoading || isLoadingCustomers) return <CardsSkeleton />;
 
