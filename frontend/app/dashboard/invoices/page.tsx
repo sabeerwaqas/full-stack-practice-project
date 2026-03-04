@@ -10,14 +10,15 @@ import {
   lusitana,
 } from "@/component";
 import { InvoiceResponse, useInvoice } from "@/api-client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Page() {
   const [invoices, setInvloices] = useState<InvoiceResponse[]>([]);
 
-  const { fetchInvoices, deleteInvoice, isLoading, error, refetch } = useInvoice({
-    shouldDefaultFetch: false,
-  });
+  const { fetchInvoices, deleteInvoice, isLoading, error, refetch } =
+    useInvoice({
+      shouldDefaultFetch: false,
+    });
 
   const handleDelete = async (id: string) => {
     const response = await deleteInvoice(id);
@@ -38,8 +39,17 @@ export default function Page() {
     loadInvoices();
   }, [fetchInvoices]);
 
-  if (isLoading) {
-    return <InvoicesTableSkeleton />;
+  function InvoiceTableData({
+    invoices,
+    onDelete,
+  }: {
+    invoices: InvoiceResponse[];
+    onDelete: (id: string) => void;
+  }) {
+    if (isLoading) {
+      return <InvoicesTableSkeleton />;
+    }
+    return <InvoicesTable invoices={invoices} onDelete={onDelete} />;
   }
 
   return (
@@ -61,7 +71,7 @@ export default function Page() {
         </Button>
       </div>
 
-      <InvoicesTable invoices={invoices} onDelete={handleDelete}/>
+      <InvoiceTableData invoices={invoices} onDelete={handleDelete} />
 
       {/* <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

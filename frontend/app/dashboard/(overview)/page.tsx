@@ -1,14 +1,6 @@
-import {
-  CardWrapper,
-  LatestInvoices,
-  LatestInvoicesSkeleton,
-  RevenueChart,
-  RevenueChartSkeleton,
-} from "@/component";
+import { CardWrapper, LatestInvoices, RevenueChart } from "@/component";
 
 import { lusitana } from "@/component/fonts";
-
-import { Suspense } from "react";
 
 export default async function Page() {
   return (
@@ -20,12 +12,8 @@ export default async function Page() {
         <CardWrapper />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <Suspense fallback={<RevenueChartSkeleton />}>
-          {/* <RevenueChart /> */}
-        </Suspense>
-        <Suspense fallback={<LatestInvoicesSkeleton />}>
-          <LatestInvoices />
-        </Suspense>
+        <RevenueChart />
+        <LatestInvoices />
       </div>
     </main>
   );

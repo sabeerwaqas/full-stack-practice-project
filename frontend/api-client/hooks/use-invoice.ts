@@ -110,7 +110,7 @@ export function useInvoice({ shouldDefaultFetch = false }): UseInvoiceState {
     setIsLoading(true);
     setError(null);
 
-    const response = await getInvoiceById({invoiceId});
+    const response = await getInvoiceById({ invoiceId });
     if (response) {
       setIsLoading(false);
       return response;
@@ -199,6 +199,6 @@ export function useInvoice({ shouldDefaultFetch = false }): UseInvoiceState {
     fetchInvoices,
     createUserInvoice,
     updateUserInvoice,
-    fetchInvoiceById
+    fetchInvoiceById,
   };
 }

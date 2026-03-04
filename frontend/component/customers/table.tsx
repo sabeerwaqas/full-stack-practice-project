@@ -1,18 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { Search } from "../search";
-import { lusitana } from "../fonts";
 import { CustomerResponse } from "@/api-client";
 
-export function CustomersTable({customers}: { customers: CustomerResponse[] }) {
-
+export function CustomersTable({
+  customers,
+}: {
+  customers: CustomerResponse[];
+}) {
   return (
     <div className="w-full">
-      <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Customers
-      </h1>
-      <Search placeholder="Search customers..." />
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">

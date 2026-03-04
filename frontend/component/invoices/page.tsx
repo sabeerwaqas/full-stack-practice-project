@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { InvoicesTableSkeleton } from "@/component/skeletons";
-import { fetchInvoicesPages } from "@/app/lib/data";
 import { Button } from "../button";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { InvoicesTable } from "./table";
@@ -16,7 +15,6 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchInvoicesPages(query);
 
   return (
     <div className="w-full">
@@ -35,12 +33,12 @@ export default async function Page(props: {
           <PlusIcon className="h-5 md:ml-4" />
         </Button>
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+      {/* <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <InvoicesTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
-      </div>
+      </div> */}
     </div>
   );
 }

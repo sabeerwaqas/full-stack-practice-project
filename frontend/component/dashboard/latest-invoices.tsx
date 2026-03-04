@@ -6,9 +6,12 @@ import Image from "next/image";
 import { lusitana } from "@/component/fonts";
 import { InvoiceResponse, useInvoice } from "@/api-client";
 import { useEffect, useState } from "react";
+import { LatestInvoicesSkeleton } from "../skeletons";
 
 export const LatestInvoices = () => {
-  const { fetchInvoices } = useInvoice({ shouldDefaultFetch: true });
+  const { fetchInvoices, isLoading } = useInvoice({
+    shouldDefaultFetch: false,
+  });
   const [latestInvoices, setLatestInvoices] = useState<InvoiceResponse[]>([]);
 
   useEffect(() => {
@@ -20,6 +23,10 @@ export const LatestInvoices = () => {
     };
     loadLatestInvoices();
   }, []);
+
+   if (isLoading) {
+    return <LatestInvoicesSkeleton />;
+  }
 
   return (
     <div className="flex w-full flex-col md:col-span-4">

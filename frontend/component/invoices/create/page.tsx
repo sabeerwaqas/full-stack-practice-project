@@ -1,22 +1,20 @@
-import { Breadcrumbs, CreateForm } from '@/component';
-import { fetchCustomers } from '@/app/lib/data';
- 
+import { Breadcrumbs, CreateForm } from "@/component";
+
 export default async function Page() {
-  const customers = await fetchCustomers();
- 
+
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
+          { label: "Invoices", href: "/dashboard/invoices" },
           {
-            label: 'Create Invoice',
-            href: '/dashboard/invoices/create',
+            label: "Create Invoice",
+            href: "/dashboard/invoices/create",
             active: true,
           },
         ]}
       />
-      <CreateForm customers={customers} />
+      <CreateForm />
     </main>
   );
 }
