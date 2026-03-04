@@ -1,25 +1,31 @@
-import { fetchFilteredCustomers } from '@/app/lib/data';
-import CustomersTable from '@/component/customers/table';
-import { Metadata } from 'next';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'Customers',
-};
+import { CustomerResponse, useCustomer } from "@/api-client";
+import {
+  CustomersTable,
+  CustomersTableSkeleton,
+  lusitana,
+  Search,
+} from "@/component";
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || '';
+export default function Page() {
+  const { customers, isLoading } = useCustomer({ shouldDefaultFetch: true });
 
-  const customers = await fetchFilteredCustomers(query);
+  function CustomerTableData({ customers }: { customers: CustomerResponse[] }) {
+    if (isLoading) {
+      return <CustomersTableSkeleton />;
+    }
+
+    return <CustomersTable customers={customers} />;
+  }
 
   return (
-    <main>
-      <CustomersTable customers={customers} />
-    </main>
+    <div className="w-full">
+      <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
+        Customers
+      </h1>
+      <Search placeholder="Search customers..." />
+      <CustomerTableData customers={customers} />
+    </div>
   );
 }

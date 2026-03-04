@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,8 +23,13 @@ public class InvoiceController {
     }
 
     @GetMapping
-    public List<InvoiceDTO> getInvoice() {
+    public List<InvoiceDTO> getInvoices() {
         return service.getInvoices();
+    }
+
+    @GetMapping("/{invoiceId}")
+    public Optional<InvoiceDTO> getInvoiceById(@PathVariable UUID invoiceId) {
+        return service.getInvoiceById(invoiceId);
     }
 
     @GetMapping("/count")
