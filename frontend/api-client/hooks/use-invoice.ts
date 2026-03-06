@@ -108,6 +108,7 @@ export function useInvoice({
       setIsLoading(false);
       return response;
     }
+    setIsLoading(false);
   }, []);
 
   const fetchInvoiceById = useCallback(async (invoiceId: string) => {
@@ -125,16 +126,10 @@ export function useInvoice({
     setIsLoading(true);
     setError(null);
 
-    const response = await deleteInvoices({ id });
-
-    if (response.error) {
-      setError(response.error);
-      return false;
-    }
+    await deleteInvoices({ id });
 
     setIsLoading(false);
 
-    fetchInvoices();
     return true;
   }, []);
 

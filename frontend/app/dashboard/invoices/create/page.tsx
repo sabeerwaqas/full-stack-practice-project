@@ -2,7 +2,7 @@
 
 import { Breadcrumbs, CreateForm } from "@/component";
 
-export default async function Page() {
+export default function Page() {
   return (
     <main>
       <Breadcrumbs

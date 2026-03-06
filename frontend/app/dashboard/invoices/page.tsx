@@ -5,15 +5,21 @@ import {
   Button,
   InvoicesTable,
   InvoicesTableSkeleton,
-  Pagination,
   Search,
   lusitana,
 } from "@/component";
 import { InvoiceResponse, useInvoice } from "@/api-client";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
-  const [invoices, setInvloices] = useState<InvoiceResponse[]>([]);
+  const [invoices, setInvoices] = useState<InvoiceResponse[]>([]);
+
+  const loadInvoices = async () => {
+    const data = await fetchInvoices();
+    if (data) {
+      setInvoices(data);
+    }
+  };
 
   const { fetchInvoices, deleteInvoice, isLoading, error, refetch } =
     useInvoice({
@@ -22,20 +28,12 @@ export default function Page() {
 
   const handleDelete = async (id: string) => {
     const response = await deleteInvoice(id);
-
     if (response) {
-      refetch();
+      await loadInvoices();
     }
   };
 
   useEffect(() => {
-    const loadInvoices = async () => {
-      const data = await fetchInvoices();
-      if (data) {
-        setInvloices(data);
-      }
-    };
-
     loadInvoices();
   }, [fetchInvoices]);
 
