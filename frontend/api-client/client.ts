@@ -37,7 +37,6 @@ export async function apiRequest<TResponse, TBody = unknown>(
       throw error;
     }
 
-    // Handle empty responses (e.g. DELETE 204)
     if (response.status === 204) {
       return null as TResponse;
     }
