@@ -38,11 +38,13 @@ public class InvoiceService {
     }
 
     public Optional<InvoiceDTO> getInvoiceById(UUID invoiceID) {
-        InvoiceEntity invoice = repository.findById(invoiceID)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Invoice not found"));
+        Optional<InvoiceEntity> invoice = repository.findById(invoiceID);
 
-        return Optional.of(InvoiceMapper.toDTO(invoice));
+        if (invoice.isPresent()) {
+            return Optional.of(InvoiceMapper.toDTO(invoice.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public InvoiceCountDTO getInvoicesCount() {

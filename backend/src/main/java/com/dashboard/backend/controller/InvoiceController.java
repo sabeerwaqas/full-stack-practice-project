@@ -4,6 +4,7 @@ import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
 import com.dashboard.backend.dto.PaidAmountDTO;
 import com.dashboard.backend.dto.PendingAmountDTO;
+import com.dashboard.backend.exception.BadRequestException;
 import com.dashboard.backend.response.ApiResponse;
 import com.dashboard.backend.service.InvoiceService;
 import jakarta.validation.Valid;
@@ -33,8 +34,23 @@ public class InvoiceController {
     }
 
     @GetMapping("/{invoiceId}")
-    public Optional<InvoiceDTO> getInvoiceById(@PathVariable UUID invoiceId) {
-        return service.getInvoiceById(invoiceId);
+    public ResponseEntity<ApiResponse<InvoiceDTO>> getInvoiceById(@PathVariable UUID invoiceId) {
+
+        if (invoiceId == null) {
+            throw new BadRequestException("Invalid request");
+        }
+
+        Optional<InvoiceDTO> invoice = service.getInvoiceById(invoiceId);
+
+        if (invoice.isPresent()) {
+            ApiResponse<InvoiceDTO> response = new ApiResponse<InvoiceDTO>(true, HttpStatus.OK.value(), "Invoice fetched successfully", invoice.get());
+            return ResponseEntity.ok(response);
+        } else {
+            ApiResponse<InvoiceDTO> response =
+                    new ApiResponse<>(false, 404, "Invoice not found", null);
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
 
     @GetMapping("/count")
