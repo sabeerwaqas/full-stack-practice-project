@@ -31,9 +31,10 @@ public class InvoiceService {
     }
 
     public List<InvoiceDTO> getInvoices() {
-        return repository.findAll()
+        List<InvoiceDTO> response = repository.findAll()
                 .stream().map(InvoiceMapper::toDTO)
                 .collect(Collectors.toList());
+        return response;
     }
 
     public Optional<InvoiceDTO> getInvoiceById(UUID invoiceID) {

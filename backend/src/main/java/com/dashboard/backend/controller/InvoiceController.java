@@ -4,8 +4,11 @@ import com.dashboard.backend.dto.InvoiceCountDTO;
 import com.dashboard.backend.dto.InvoiceDTO;
 import com.dashboard.backend.dto.PaidAmountDTO;
 import com.dashboard.backend.dto.PendingAmountDTO;
+import com.dashboard.backend.response.ApiResponse;
 import com.dashboard.backend.service.InvoiceService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +26,10 @@ public class InvoiceController {
     }
 
     @GetMapping
-    public List<InvoiceDTO> getInvoices() {
-        return service.getInvoices();
+    public ResponseEntity<ApiResponse<List<InvoiceDTO>>> getInvoices() {
+        List<InvoiceDTO> invoices = service.getInvoices();
+        ApiResponse<List<InvoiceDTO>> response = new ApiResponse<>(true, HttpStatus.OK.value(), "Invoices fetched successfully", invoices);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{invoiceId}")
