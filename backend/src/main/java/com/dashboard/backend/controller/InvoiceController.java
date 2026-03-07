@@ -69,8 +69,11 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public InvoiceDTO addInvoice(@Valid @RequestBody InvoiceDTO dto) {
-        return service.addInvoice(dto);
+    public ResponseEntity<ApiResponse<InvoiceDTO>> addInvoice(@Valid @RequestBody InvoiceDTO dto) {
+
+        Optional<Object> savedInvoice = service.addInvoice(dto);
+        ApiResponse<InvoiceDTO> response = new ApiResponse<InvoiceDTO>(true, HttpStatus.CREATED.value(), "Invoice created successfully", (InvoiceDTO) savedInvoice.get());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping

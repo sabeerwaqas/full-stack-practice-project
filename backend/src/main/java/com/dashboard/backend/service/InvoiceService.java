@@ -6,6 +6,7 @@ import com.dashboard.backend.dto.PaidAmountDTO;
 import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.entity.CustomerEntity;
 import com.dashboard.backend.entity.InvoiceEntity;
+import com.dashboard.backend.exception.ResourceNotFoundException;
 import com.dashboard.backend.mapper.InvoiceMapper;
 import com.dashboard.backend.repository.CustomerRepository;
 import com.dashboard.backend.repository.InvoiceRepository;
@@ -31,15 +32,14 @@ public class InvoiceService {
     }
 
     public List<InvoiceDTO> getInvoices() {
-        List<InvoiceDTO> response = repository.findAll()
+        List<InvoiceDTO> invoice = repository.findAll()
                 .stream().map(InvoiceMapper::toDTO)
                 .collect(Collectors.toList());
-        return response;
+        return invoice;
     }
 
     public Optional<InvoiceDTO> getInvoiceById(UUID invoiceID) {
         Optional<InvoiceEntity> invoice = repository.findById(invoiceID);
-
         if (invoice.isPresent()) {
             return Optional.of(InvoiceMapper.toDTO(invoice.get()));
         } else {
@@ -55,29 +55,26 @@ public class InvoiceService {
         long pendingAmountInCents = repository.sumPendingAmount();
         BigDecimal amountInDollars = BigDecimal.valueOf(pendingAmountInCents)
                 .divide(BigDecimal.valueOf(100));
-
         return new PendingAmountDTO(amountInDollars);
     }
 
     public PaidAmountDTO getPaidAmount() {
         long paidAmountInCents = repository.sumPaidAmount();
-
         BigDecimal paidAmountInDollars = BigDecimal.valueOf(paidAmountInCents)
                 .divide(BigDecimal.valueOf(100));
-
         return new PaidAmountDTO(paidAmountInDollars);
     }
 
-    public InvoiceDTO addInvoice(InvoiceDTO dto) {
+    public Optional<Object> addInvoice(InvoiceDTO dto) {
+        Optional<CustomerEntity> customer = customerRepository.findById(dto.customer_id);
 
-        CustomerEntity customer = customerRepository.findById(dto.customer_id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Customer not found"));
+        if (customer.isEmpty()) {
+            throw new ResourceNotFoundException("Customer not found");
+        }
 
-        InvoiceEntity entity = InvoiceMapper.toEntity(dto, customer);
+        InvoiceEntity entity = InvoiceMapper.toEntity(dto, customer.get());
         InvoiceEntity saved = repository.save(entity);
-
-        return InvoiceMapper.toDTO(saved);
+        return Optional.of(InvoiceMapper.toDTO(saved));
     }
 
     public InvoiceDTO updateInvoice(InvoiceDTO dto) {
