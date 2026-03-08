@@ -48,7 +48,6 @@ public class InvoiceController {
         } else {
             ApiResponse<InvoiceDTO> response =
                     new ApiResponse<>(false, 404, "Invoice not found", null);
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -61,31 +60,38 @@ public class InvoiceController {
     }
 
     @GetMapping("/pending-amount")
-    public PendingAmountDTO getPendingAmount() {
-        return service.getPendingAmount();
+    public ResponseEntity<ApiResponse<PendingAmountDTO>> getPendingAmount() {
+        PendingAmountDTO pendingAmount = service.getPendingAmount();
+        ApiResponse<PendingAmountDTO> response = new ApiResponse<PendingAmountDTO>(true, HttpStatus.OK.value(), "Pending amount fetched successfully.", pendingAmount);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/paid-amount")
-    public PaidAmountDTO getPaidAmount() {
-        return service.getPaidAmount();
+    public ResponseEntity<ApiResponse<PaidAmountDTO>> getPaidAmount() {
+        PaidAmountDTO paidAmount = service.getPaidAmount();
+        ApiResponse<PaidAmountDTO> response = new ApiResponse<>(true, HttpStatus.OK.value(), "Paid amount fetched successfully.", paidAmount);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<InvoiceDTO>> addInvoice(@Valid @RequestBody InvoiceDTO dto) {
-
         Optional<Object> savedInvoice = service.addInvoice(dto);
         ApiResponse<InvoiceDTO> response = new ApiResponse<InvoiceDTO>(true, HttpStatus.CREATED.value(), "Invoice created successfully", (InvoiceDTO) savedInvoice.get());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping
-    public InvoiceDTO updateEntity(@Valid @RequestBody InvoiceDTO dto) {
-        return service.updateInvoice(dto);
+    public ResponseEntity<ApiResponse<InvoiceDTO>> updateEntity(@Valid @RequestBody InvoiceDTO dto) {
+        InvoiceDTO updatedInvoice = service.updateInvoice(dto);
+        ApiResponse<InvoiceDTO> response = new ApiResponse<InvoiceDTO>(true, HttpStatus.OK.value(), "Invoice updated successfully.", updatedInvoice);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{invoiceId}")
-    public void deleteInvoice(@PathVariable UUID invoiceId) {
+    public ResponseEntity<ApiResponse<Void>> deleteInvoice(@PathVariable UUID invoiceId) {
         service.deleteInvoice(invoiceId);
+        ApiResponse response = new ApiResponse(true, HttpStatus.OK.value(), "Invoice deleted successfully.", null);
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -6,6 +6,7 @@ import com.dashboard.backend.dto.PaidAmountDTO;
 import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.entity.CustomerEntity;
 import com.dashboard.backend.entity.InvoiceEntity;
+import com.dashboard.backend.exception.ResourceNotFoundException;
 import com.dashboard.backend.mapper.InvoiceMapper;
 import com.dashboard.backend.repository.CustomerRepository;
 import com.dashboard.backend.repository.InvoiceRepository;
@@ -89,7 +90,7 @@ public class InvoiceService {
 
     public void deleteInvoice(UUID invoiceId) {
         if (!repository.existsById(invoiceId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found");
+            throw new ResourceNotFoundException("Invoice not found");
         }
         repository.deleteById(invoiceId);
     }
