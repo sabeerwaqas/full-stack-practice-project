@@ -54,8 +54,10 @@ public class InvoiceController {
     }
 
     @GetMapping("/count")
-    public InvoiceCountDTO getTotalInvoices() {
-        return service.getInvoicesCount();
+    public ResponseEntity<ApiResponse<InvoiceCountDTO>> getTotalInvoices() {
+        InvoiceCountDTO invoiceCount = service.getInvoicesCount();
+        ApiResponse<InvoiceCountDTO> response = new ApiResponse<InvoiceCountDTO>(true, HttpStatus.OK.value(), "Invoice count fetched successfully", invoiceCount);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/pending-amount")

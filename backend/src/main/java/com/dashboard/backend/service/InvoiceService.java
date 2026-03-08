@@ -6,7 +6,6 @@ import com.dashboard.backend.dto.PaidAmountDTO;
 import com.dashboard.backend.dto.PendingAmountDTO;
 import com.dashboard.backend.entity.CustomerEntity;
 import com.dashboard.backend.entity.InvoiceEntity;
-import com.dashboard.backend.exception.ResourceNotFoundException;
 import com.dashboard.backend.mapper.InvoiceMapper;
 import com.dashboard.backend.repository.CustomerRepository;
 import com.dashboard.backend.repository.InvoiceRepository;
@@ -67,11 +66,6 @@ public class InvoiceService {
 
     public Optional<Object> addInvoice(InvoiceDTO dto) {
         Optional<CustomerEntity> customer = customerRepository.findById(dto.customer_id);
-
-        if (customer.isEmpty()) {
-            throw new ResourceNotFoundException("Customer not found");
-        }
-
         InvoiceEntity entity = InvoiceMapper.toEntity(dto, customer.get());
         InvoiceEntity saved = repository.save(entity);
         return Optional.of(InvoiceMapper.toDTO(saved));
