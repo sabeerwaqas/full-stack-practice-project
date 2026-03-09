@@ -1,7 +1,6 @@
 import { ApiError, ApiRequestOptions, ApiResponse } from "./types";
 
-// const API_BASE_URL = "https://app-260118003111.azurewebsites.net";
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export async function apiRequest<TResponse, TBody = unknown>(
   endpoint: string,
@@ -34,7 +33,7 @@ export async function apiRequest<TResponse, TBody = unknown>(
       };
     }
 
-    const result = (await response.json()) as ApiResponse<TResponse>;
+    const result = await response.json();
 
     if (!response.ok || !result.success) {
       const error: ApiError = new Error(result.message || "API request failed");
