@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import InvoiceStatus from "@/component/invoices/status";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { Button } from "../button";
-import { InvoiceResponse, useInvoice } from "@/api-client";
+import { InvoiceResponse } from "@/api-client";
 import { formatCurrency, formatDateToLocal } from "@/app/lib/utils";
 
 export const InvoicesTable = ({
@@ -26,13 +28,13 @@ export const InvoicesTable = ({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      {/* <Image
+                      <Image
                         src={invoice.image_url}
-                        className="mr-2 rounded-full"
+                        className="rounded-full"
                         width={28}
                         height={28}
-                        alt={`${invoice.name}'s profile picture`}
-                      /> */}
+                        alt={`${invoice.customerName}'s profile picture`}
+                      />
                       <p>{invoice.customerName}</p>
                     </div>
                     <p className="text-sm text-gray-500">
@@ -102,7 +104,7 @@ export const InvoicesTable = ({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
                       <Image
-                        src={"/placeholder-profile.png"}
+                        src={invoice.image_url}
                         className="rounded-full"
                         width={28}
                         height={28}

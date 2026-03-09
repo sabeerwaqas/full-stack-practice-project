@@ -40,6 +40,7 @@ export interface InvoiceResponse {
   customer_id: string;
   customerName: string;
   customerEmail: string;
+  image_url: string;
   amount: number;
   date: string;
   status: "paid" | "pending";
