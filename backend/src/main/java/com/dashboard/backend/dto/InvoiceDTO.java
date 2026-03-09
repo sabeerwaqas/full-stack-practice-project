@@ -1,5 +1,6 @@
 package com.dashboard.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -18,7 +19,8 @@ public class InvoiceDTO {
 
     public UUID invoiceId;
 
-    public String customerImage;
+    @JsonProperty("image_url")
+    public String image_url;
 
     @NotNull(message = "Amount is required")
     @Positive(message = "Amount must be greater than 0")
@@ -70,11 +72,11 @@ public class InvoiceDTO {
     }
 
     public String getImage_url() {
-        return this.customerImage;
+        return this.image_url;
     }
 
     public void setImage_url(String image_url) {
-        this.customerImage = image_url;
+        this.image_url = image_url;
     }
 
     public String getStatus() {

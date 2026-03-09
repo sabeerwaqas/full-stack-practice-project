@@ -26,7 +26,7 @@ public class InvoiceMapper {
         dto.customer_id = customer.getId();
         dto.customerName = customer.getName();
         dto.customerEmail = customer.getEmail();
-        dto.customerImage = customer.getImageUrl();
+        dto.image_url = customer.getImageUrl();
 
         return dto;
     }
