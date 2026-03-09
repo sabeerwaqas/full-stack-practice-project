@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { getAllCustomers, getTotalCustomers } from "../customer-api";
-import { CustomerResponse, TotalCustomersCountResponse } from "../types";
+import { CustomerResponse } from "../types";
 
 interface UseCustomerState {
   totalCustomers: number;
@@ -25,9 +25,9 @@ export function useCustomer({ shouldDefaultFetch = true }): UseCustomerState {
     setError(null);
 
     try {
-      const response: TotalCustomersCountResponse = await getTotalCustomers();
+      const response = await getTotalCustomers();
 
-      setTotalCustomers(response.totalCustomers);
+      setTotalCustomers(response.data.totalCustomers);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to fetch invoice data",
@@ -41,8 +41,8 @@ export function useCustomer({ shouldDefaultFetch = true }): UseCustomerState {
     setIsLoading(true);
     setError(null);
 
-    const response: CustomerResponse[] = await getAllCustomers();
-    setCustomers(response);
+    const response = await getAllCustomers();
+    setCustomers(response.data);
 
     setIsLoading(false);
   }, []);

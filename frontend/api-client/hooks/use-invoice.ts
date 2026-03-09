@@ -1,14 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import {
-  CustomerField,
-  InvoiceRequest,
-  InvoiceResponse,
-  PaidInvoiceAmountResponse,
-  PendingInvoiceAmountResponse,
-  TotalInvoiceCountResponse,
-} from "../types";
+import { CustomerField, InvoiceRequest, InvoiceResponse } from "../types";
 import {
   createInvoice,
   deleteInvoices,
@@ -51,10 +44,9 @@ export function useInvoice({
     setError(null);
 
     try {
-      const response: PendingInvoiceAmountResponse =
-        await getPendingInvoiceAmount();
+      const response = await getPendingInvoiceAmount();
 
-      setPendingAmount(response.pendingAmount);
+      setPendingAmount(response.data.pendingAmount);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to fetch invoice data",
@@ -69,9 +61,9 @@ export function useInvoice({
     setError(null);
 
     try {
-      const response: PaidInvoiceAmountResponse = await getPaidInvoiceAmount();
+      const response = await getPaidInvoiceAmount();
 
-      setPaidAmount(response.paidAmount);
+      setPaidAmount(response.data.paidAmount);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to fetch invoice data",
@@ -86,9 +78,9 @@ export function useInvoice({
     setError(null);
 
     try {
-      const response: TotalInvoiceCountResponse = await getTotalInvoices();
+      const response = await getTotalInvoices();
 
-      setTotalInvoices(response.totalInvoices);
+      setTotalInvoices(response.data.totalInvoices);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to fetch invoice data",
@@ -102,11 +94,11 @@ export function useInvoice({
     setIsLoading(true);
     setError(null);
 
-    const response: InvoiceResponse[] = await getInvoices();
+    const response = await getInvoices();
 
     if (response) {
       setIsLoading(false);
-      return response;
+      return response.data;
     }
     setIsLoading(false);
   }, []);
@@ -118,7 +110,7 @@ export function useInvoice({
     const response = await getInvoiceById({ invoiceId });
     if (response) {
       setIsLoading(false);
-      return response;
+      return response.data;
     }
   }, []);
 
@@ -145,8 +137,8 @@ export function useInvoice({
 
     const response = await createInvoice({ data: payload });
 
-    if (response.error) {
-      setError(response.error);
+    if (!response.status) {
+      setError(response.message);
       return false;
     }
 
@@ -168,8 +160,8 @@ export function useInvoice({
 
     const response = await updateInvoice({ data: payload });
 
-    if (response.error) {
-      setError(response.error);
+    if (!response.status) {
+      setError(response.message);
       return false;
     }
 

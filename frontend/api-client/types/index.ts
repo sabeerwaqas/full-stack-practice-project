@@ -7,6 +7,13 @@ export interface ApiRequestOptions<TBody = unknown> {
   timeoutMs?: number;
 }
 
+export interface ApiResponse<T> {
+  success: boolean;
+  status: number;
+  message: string;
+  data: T;
+}
+
 export interface ApiError extends Error {
   status?: number;
   data?: unknown;
