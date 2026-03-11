@@ -101,18 +101,18 @@ export const InvoicesTable = ({
                           buttonType="link"
                           type="submit"
                           href={`/dashboard/invoices/${invoice.invoiceId}/edit`}
-                          className="rounded-md border !p-2 hover:bg-gray-100 bg-white !text-gray-700"
+                          variant="secondary"
                         >
-                          <PencilIcon className="w-5" />
+                          <PencilIcon className="w-5" color="green" />
                         </Button>
-                        <button
+                        <Button
                           onClick={() => handleDialogOpen(invoice.invoiceId)}
                           type="submit"
-                          className="rounded-md border p-2 hover:bg-gray-100"
+                          variant="secondary"
                         >
                           <span className="sr-only">Delete</span>
-                          <TrashIcon className="w-5" />
-                        </button>
+                          <TrashIcon className="w-5" color="red" />
+                        </Button>
                       </div>
                     </td>
                   </tr>
