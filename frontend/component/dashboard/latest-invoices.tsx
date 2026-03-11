@@ -24,7 +24,7 @@ export const LatestInvoices = () => {
     loadLatestInvoices();
   }, []);
 
-   if (isLoading) {
+  if (isLoading) {
     return <LatestInvoicesSkeleton />;
   }
 
@@ -47,13 +47,13 @@ export const LatestInvoices = () => {
                 )}
               >
                 <div className="flex items-center">
-                  {/* <Image
+                  <Image
                     src={invoice.image_url}
-                    alt={`${invoice.name}'s profile picture`}
+                    alt={`${invoice.customerName}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}
                     height={32}
-                  /> */}
+                  />
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold md:text-base">
                       {invoice.customerName}
