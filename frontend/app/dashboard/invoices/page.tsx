@@ -13,10 +13,9 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/context/use-context";
 
 export default function Page() {
-  const { fetchInvoices, deleteInvoice, isLoading, error, refetch } =
-    useInvoice({
-      shouldDefaultFetch: false,
-    });
+  const { fetchInvoices, deleteInvoice, isLoading } = useInvoice({
+    shouldDefaultFetch: false,
+  });
 
   const [invoices, setInvoices] = useState<InvoiceResponse[]>([]);
 

@@ -12,6 +12,7 @@ import {
   getTotalInvoices,
   updateInvoice,
 } from "../invoice-api";
+import { useToast } from "@/context/use-context";
 
 interface UseInvoiceState {
   pendingAmount: number;
@@ -38,6 +39,7 @@ export function useInvoice({
   const [totalInvoices, setTotalInvoices] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const fetchPendingAmount = useCallback(async () => {
     setIsLoading(true);
@@ -95,6 +97,12 @@ export function useInvoice({
     setError(null);
 
     const response = await getInvoices();
+
+    if (response.success === false) {
+      setError(response.message);
+      setIsLoading(false);
+      return;
+    }
 
     if (response) {
       setIsLoading(false);
@@ -184,6 +192,12 @@ export function useInvoice({
       fetchTotalInvoices();
     }
   }, [fetchPendingAmount, fetchPaidAmount, fetchTotalInvoices]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   return {
     pendingAmount,
