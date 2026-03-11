@@ -31,24 +31,12 @@ export default function Page() {
     if (response) {
       await loadInvoices();
     }
+    return response;
   };
 
   useEffect(() => {
     loadInvoices();
   }, [fetchInvoices]);
-
-  function InvoiceTableData({
-    invoices,
-    onDelete,
-  }: {
-    invoices: InvoiceResponse[];
-    onDelete: (id: string) => void;
-  }) {
-    if (isLoading) {
-      return <InvoicesTableSkeleton />;
-    }
-    return <InvoicesTable invoices={invoices} onDelete={onDelete} />;
-  }
 
   return (
     <div className="w-full">
@@ -69,11 +57,30 @@ export default function Page() {
         </Button>
       </div>
 
-      <InvoiceTableData invoices={invoices} onDelete={handleDelete} />
+      <InvoiceTableData
+        invoices={invoices}
+        onDelete={handleDelete}
+        isLoading={isLoading}
+      />
 
       {/* <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div> */}
     </div>
   );
+}
+
+function InvoiceTableData({
+  invoices,
+  onDelete,
+  isLoading,
+}: {
+  invoices: InvoiceResponse[];
+  onDelete: (id: string) => Promise<Boolean>;
+  isLoading: boolean;
+}) {
+  if (isLoading) {
+    return <InvoicesTableSkeleton />;
+  }
+  return <InvoicesTable invoices={invoices} onDelete={onDelete} />;
 }
