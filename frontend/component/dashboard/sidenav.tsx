@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { PowerIcon } from "@heroicons/react/24/outline";
-import NavLinks from "./nav-links";
+import NavLinks from "../nav-links";
 import AcmeLogo from "../acme-logo";
 import { useRouter } from "next/navigation";
+import { Button } from "../button";
 
 export default function SideNav() {
   const navigate = useRouter();
@@ -27,13 +28,14 @@ export default function SideNav() {
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
 
-        <button
+        <Button
           onClick={handleSignOut}
-          className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+          variant="secondary"
+          className="gap-2 !justify-start"
         >
           <PowerIcon className="w-6" />
           <div className="hidden md:block">Sign Out</div>
-        </button>
+        </Button>
       </div>
     </div>
   );
