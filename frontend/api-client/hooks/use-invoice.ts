@@ -118,7 +118,13 @@ export function useInvoice({
     setIsLoading(true);
     setError(null);
 
-    await deleteInvoices({ id });
+    const response = await deleteInvoices({ id });
+
+    if (response.success === false) {
+      setError(response.message);
+      setIsLoading(false);
+      return false;
+    }
 
     setIsLoading(false);
 

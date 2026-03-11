@@ -10,9 +10,17 @@ import {
 } from "@/component";
 import { InvoiceResponse, useInvoice } from "@/api-client";
 import { useEffect, useState } from "react";
+import { useToast } from "@/context/use-context";
 
 export default function Page() {
+  const { fetchInvoices, deleteInvoice, isLoading, error, refetch } =
+    useInvoice({
+      shouldDefaultFetch: false,
+    });
+
   const [invoices, setInvoices] = useState<InvoiceResponse[]>([]);
+
+  const { toast } = useToast();
 
   const loadInvoices = async () => {
     const data = await fetchInvoices();
@@ -21,14 +29,10 @@ export default function Page() {
     }
   };
 
-  const { fetchInvoices, deleteInvoice, isLoading, error, refetch } =
-    useInvoice({
-      shouldDefaultFetch: false,
-    });
-
   const handleDelete = async (id: string) => {
     const response = await deleteInvoice(id);
     if (response) {
+      toast.success("Invoice deleted successfully!");
       await loadInvoices();
     }
     return response;
