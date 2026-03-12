@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   onClick?: () => void;
   href?: string;
+  disabled?: boolean;
 }
 
 const variants = {
@@ -28,23 +29,28 @@ export const Button = ({
   className = "",
   href = "",
   onClick,
-  ...rest
+  disabled,
 }: ButtonProps) => {
   const baseClasses =
-    "flex h-10 items-center justify-center rounded-lg px-4 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 transition";
+    "flex h-10 items-center justify-center rounded-lg px-4 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition";
 
   const classes = clsx(baseClasses, variants[variant], className);
 
   if (buttonType === "link" && href) {
     return (
-      <Link href={href} className={classes} {...rest}>
+      <Link href={href} className={classes}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes} {...rest}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={classes}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

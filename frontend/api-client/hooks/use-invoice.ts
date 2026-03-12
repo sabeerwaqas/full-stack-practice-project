@@ -133,7 +133,7 @@ export function useInvoice({
     if (error) {
       toast.error(error);
     }
-  }, [error]);
+  }, [error, toast]);
 
   return {
     pendingAmount,

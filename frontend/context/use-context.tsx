@@ -47,12 +47,15 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     [],
   );
 
-  const toastHelpers: ToastContextType = {
-    success: (msg, dur) => addToast(msg, "success", dur),
-    error: (msg, dur) => addToast(msg, "error", dur),
-    info: (msg, dur) => addToast(msg, "info", dur),
-    warning: (msg, dur) => addToast(msg, "warning", dur),
-  };
+  const toastHelpers = React.useMemo<ToastContextType>(
+    () => ({
+      success: (msg, dur) => addToast(msg, "success", dur),
+      error: (msg, dur) => addToast(msg, "error", dur),
+      info: (msg, dur) => addToast(msg, "info", dur),
+      warning: (msg, dur) => addToast(msg, "warning", dur),
+    }),
+    [addToast]
+  );
 
   const typeStyles: Record<ToastType, string> = {
     success: "bg-emerald-100 text-emerald-900 border border-emerald-200",
