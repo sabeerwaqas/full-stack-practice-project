@@ -41,149 +41,85 @@ export function useInvoice({
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
+  const handleApiCall = useCallback(
+    async <T,>(
+      apiCall: () => Promise<T>,
+      errorMessage: string,
+    ): Promise<T | undefined> => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        return await apiCall();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : errorMessage);
+        return undefined;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [],
+  );
+
   const fetchPendingAmount = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await getPendingInvoiceAmount();
-
-      setPendingAmount(response.data.pendingAmount);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to fetch invoice data",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    const response = await handleApiCall(getPendingInvoiceAmount, "Failed to fetch pending amount");
+    if (response) setPendingAmount(response.data.pendingAmount);
+  }, [handleApiCall]);
 
   const fetchPaidAmount = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await getPaidInvoiceAmount();
-
-      setPaidAmount(response.data.paidAmount);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to fetch invoice data",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    const response = await handleApiCall(getPaidInvoiceAmount, "Failed to fetch paid amount");
+    if (response) setPaidAmount(response.data.paidAmount);
+  }, [handleApiCall]);
 
   const fetchTotalInvoices = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await getTotalInvoices();
-
-      setTotalInvoices(response.data.totalInvoices);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to fetch invoice data",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    const response = await handleApiCall(getTotalInvoices, "Failed to fetch total invoices");
+    if (response) setTotalInvoices(response.data.totalInvoices);
+  }, [handleApiCall]);
 
   const fetchInvoices = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    const response = await getInvoices();
-
-    if (response.success === false) {
-      setError(response.message);
-      setIsLoading(false);
-      return;
-    }
-
-    if (response) {
-      setIsLoading(false);
-      return response.data;
-    }
-    setIsLoading(false);
-  }, []);
+    const response = await handleApiCall(getInvoices, "Failed to fetch invoices");
+    return response?.data;
+  }, [handleApiCall]);
 
   const fetchInvoiceById = useCallback(async (invoiceId: string) => {
-    setIsLoading(true);
-    setError(null);
-
-    const response = await getInvoiceById({ invoiceId });
-    if (response) {
-      setIsLoading(false);
-      return response.data;
-    }
-  }, []);
+    const response = await handleApiCall(() => getInvoiceById({ invoiceId }), "Failed to fetch invoice");
+    return response?.data;
+  }, [handleApiCall]);
 
   const deleteInvoice = useCallback(async (id: string) => {
-    setIsLoading(true);
-    setError(null);
-
-    const response = await deleteInvoices({ id });
-
-    if (response.success === false) {
-      setError(response.message);
-      setIsLoading(false);
-      return false;
-    }
-
-    setIsLoading(false);
-
-    return true;
-  }, []);
+    const response = await handleApiCall(() => deleteInvoices({ id }), "Failed to delete invoice");
+    return !!response;
+  }, [handleApiCall]);
 
   const createUserInvoice = useCallback(async (data: CustomerField) => {
-    setIsLoading(true);
-    setError(null);
-
     const payload = {
       customer_id: data.customer_id,
       amount: data.amount,
       status: data.status,
     };
+    const response = await handleApiCall(() => createInvoice({ data: payload }), "Failed to create invoice");
+    return !!response;
+  }, [handleApiCall]);
 
-    const response = await createInvoice({ data: payload });
-
-    if (response.success === false) {
-      setError(response.message);
+  const updateUserInvoice = useCallback(
+    async (data: InvoiceRequest) => {
+      const payload = {
+        invoiceId: data.invoiceId,
+        customer_id: data.customer_id,
+        amount: data.amount,
+        status: data.status,
+      };
+      const response = await handleApiCall(
+        () => updateInvoice({ data: payload }),
+        "Failed to update invoice",
+      );
+      if (response) {
+        fetchInvoices();
+        return true;
+      }
       return false;
-    }
-
-    setIsLoading(false);
-
-    return true;
-  }, []);
-
-  const updateUserInvoice = useCallback(async (data: InvoiceRequest) => {
-    setIsLoading(true);
-    setError(null);
-
-    const payload = {
-      invoiceId: data.invoiceId,
-      customer_id: data.customer_id,
-      amount: data.amount,
-      status: data.status,
-    };
-
-    const response = await updateInvoice({ data: payload });
-
-    if (!response.status) {
-      setError(response.message);
-      return false;
-    }
-
-    fetchInvoices();
-    setIsLoading(false);
-
-    return true;
-  }, []);
+    },
+    [handleApiCall, fetchInvoices],
+  );
 
   useEffect(() => {
     if (shouldDefaultFetch) {

@@ -39,6 +39,7 @@ export async function apiRequest<TResponse, TBody = unknown>(
       const error: ApiError = new Error(result.message || "API request failed");
       error.status = result.status || response.status;
       error.data = result;
+      throw error;
     }
 
     return result;
