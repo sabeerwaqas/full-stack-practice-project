@@ -151,7 +151,7 @@ export function useInvoice({
 
     const response = await createInvoice({ data: payload });
 
-    if (!response.status) {
+    if (response.success === false) {
       setError(response.message);
       return false;
     }
