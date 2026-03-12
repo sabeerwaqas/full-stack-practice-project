@@ -24,7 +24,7 @@ export const generateYAxis = (revenue: { revenue: number }[]) => {
 
   const highestRecord = Math.max(...revenue.map((m) => m.revenue), 0);
 
-  const topLabel = Math.ceil(highestRecord / 1000) * 1000;
+  const topLabel = Math.max(Math.ceil(highestRecord / 1000) * 1000, 5000);
 
   const rawStep = Math.ceil(topLabel / MAX_LABELS);
   const step = Math.max(1000, Math.ceil(rawStep / 1000) * 1000);
@@ -79,8 +79,7 @@ export function calculateMonthlyRevenue(invoices: Invoice[]) {
       const date = new Date(invoice.date);
       const key = `${date.getFullYear()}-${date.getMonth()}`;
 
-      // cents → dollars
-      revenueMap.set(key, (revenueMap.get(key) ?? 0) + invoice.amount / 100);
+      revenueMap.set(key, (revenueMap.get(key) ?? 0) + invoice.amount);
     });
 
   return months.map(({ key, label }) => ({

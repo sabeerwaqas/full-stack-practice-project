@@ -32,7 +32,7 @@ export const RevenueChart = () => {
 
   const { yAxisLabels, topLabel } = generateYAxis(revenue);
 
-  if (!revenue.length) {
+  if (isLoading) {
     return <RevenueChartSkeleton />;
   }
 
