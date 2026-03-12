@@ -17,3 +17,4 @@ export * from "./modal-component";
 export * from "./modal";
 export * from "./modal/delete-invoice-modal";
 export * from "./mobile-UI/mobile-invoice-ui";
+export * from "./no-invoice-found";

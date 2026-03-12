@@ -7,6 +7,7 @@ import { lusitana } from "@/component/fonts";
 import { InvoiceResponse, useInvoice } from "@/api-client";
 import { useEffect, useState } from "react";
 import { LatestInvoicesSkeleton } from "../skeletons";
+import { NoInvoiceFound } from "../no-invoice-found";
 
 export const LatestInvoices = () => {
   const { fetchInvoices, isLoading } = useInvoice({
@@ -26,6 +27,17 @@ export const LatestInvoices = () => {
 
   if (isLoading) {
     return <LatestInvoicesSkeleton />;
+  }
+
+  if (latestInvoices.length === 0) {
+    return (
+      <div className="flex w-full flex-col md:col-span-4">
+        <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+          Latest Invoices
+        </h2>
+        <NoInvoiceFound />
+      </div>
+    );
   }
 
   return (
