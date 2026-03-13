@@ -5,7 +5,7 @@ import {
   Button,
   InvoicesTable,
   InvoicesTableSkeleton,
-  NoInvoiceFound,
+  NoContentFound,
   Search,
   lusitana,
 } from "@/component";
@@ -93,7 +93,13 @@ function InvoiceTableData({
   }
 
   if (invoices.length === 0) {
-    return <NoInvoiceFound />;
+    return (
+      <NoContentFound
+        title="No Invoices Found"
+        description="You have no invoices yet. Create one to get started."
+        icon={<DocumentTextIcon className="h-6 w-6 text-gray-400" />}
+      />
+    );
   }
 
   return <InvoicesTable invoices={invoices} onDelete={onDelete} />;

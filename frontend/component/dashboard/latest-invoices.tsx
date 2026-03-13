@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Image from "next/image";
 import { lusitana } from "@/component/fonts";
 import { InvoiceResponse, useInvoice } from "@/api-client";
 import { useEffect, useState } from "react";
 import { LatestInvoicesSkeleton } from "../skeletons";
-import { NoInvoiceFound } from "../no-invoice-found";
+import { NoContentFound } from "../no-content-found";
 
 export const LatestInvoices = () => {
   const { fetchInvoices, isLoading } = useInvoice({
@@ -35,7 +35,11 @@ export const LatestInvoices = () => {
         <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
           Latest Invoices
         </h2>
-        <NoInvoiceFound />
+        <NoContentFound
+          title="No Invoices Found"
+          description="You have no invoices yet. Create one to get started."
+          icon={<DocumentTextIcon className="h-6 w-6 text-gray-400" />}
+        />
       </div>
     );
   }
